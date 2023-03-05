@@ -5,6 +5,5 @@ public enum TokenType {
     NUMBER,
     CHARACTER,
     STRING,
-    BRACKET,
     SPECIAL
 }

@@ -129,7 +129,7 @@ public @Service class TokenProcessor {
                         text = new StringBuilder("" + ch);
                         start = i;
                     } else if (isBracket(ch)) {
-                        line.addLast(create(TokenType.BRACKET, "" + ch, i));
+                        line.addLast(create(TokenType.SPECIAL, "" + ch, i));
                     } else if (isSpecial(ch)) {
                         type = TokenType.SPECIAL;
                         text = new StringBuilder("" + ch);

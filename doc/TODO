@@ -1,1 +1,3 @@
 add tests
+allow space and comment tokens
+    also add processor that will be able to remove them

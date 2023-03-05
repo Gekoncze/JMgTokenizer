@@ -6,17 +6,17 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Glyph;
 import cz.mg.collections.list.List;
 
-public @Service class CharacterProcessor {
-    private static @Optional CharacterProcessor instance;
+public @Service class GlyphProcessor {
+    private static @Optional GlyphProcessor instance;
 
-    public static @Mandatory CharacterProcessor getInstance() {
+    public static @Mandatory GlyphProcessor getInstance() {
         if (instance == null) {
-            instance = new CharacterProcessor();
+            instance = new GlyphProcessor();
         }
         return instance;
     }
 
-    private CharacterProcessor() {
+    private GlyphProcessor() {
     }
 
     /**
