@@ -2,12 +2,10 @@ package cz.mg.tokenizer.services;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
+import cz.mg.collections.services.CollectionComparator;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Glyph;
 import cz.mg.tokenizer.services.processors.GlyphProcessor;
-
-import java.util.Arrays;
-import java.util.Iterator;
 
 public @Test class GlyphProcessorTest {
     public static void main(String[] args) {
@@ -35,17 +33,12 @@ public @Test class GlyphProcessorTest {
 
     private void testProcessing(String content, Glyph... expectedGlyphs) {
         GlyphProcessor processor = GlyphProcessor.getInstance();
+        CollectionComparator comparator = CollectionComparator.getInstance();
         List<Glyph> actualGlyphs = processor.process(content);
-
-        Assert.assertEquals(Arrays.stream(expectedGlyphs).count(), actualGlyphs.count());
-
-        Iterator<Glyph> expectedGlyphsIterator = Arrays.stream(expectedGlyphs).iterator();
-        Iterator<Glyph> actualGlyphsIterator = actualGlyphs.iterator();
-        while (expectedGlyphsIterator.hasNext() && actualGlyphsIterator.hasNext()) {
-            Glyph expectedGlyph = expectedGlyphsIterator.next();
-            Glyph actualGlyph = actualGlyphsIterator.next();
-            Assert.assertEquals(expectedGlyph.getCharacter(), actualGlyph.getCharacter());
-            Assert.assertEquals(expectedGlyph.getPosition(), actualGlyph.getPosition());
-        }
+        Assert.assertEquals(true, comparator.equals(
+            new List<>(expectedGlyphs),
+            actualGlyphs,
+            (e, a) -> e.getCharacter() == a.getCharacter() && e.getPosition() == a.getPosition()
+        ));
     }
 }
