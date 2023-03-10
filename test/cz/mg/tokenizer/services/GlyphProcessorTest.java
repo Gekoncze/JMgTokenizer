@@ -2,7 +2,6 @@ package cz.mg.tokenizer.services;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.collections.services.CollectionComparator;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Glyph;
 import cz.mg.tokenizer.services.processors.GlyphProcessor;
@@ -33,12 +32,12 @@ public @Test class GlyphProcessorTest {
 
     private void testProcessing(String content, Glyph... expectedGlyphs) {
         GlyphProcessor processor = GlyphProcessor.getInstance();
-        CollectionComparator comparator = CollectionComparator.getInstance();
         List<Glyph> actualGlyphs = processor.process(content);
-        Assert.assertEquals(true, comparator.equals(
+        Assert.assertEquals(
             new List<>(expectedGlyphs),
             actualGlyphs,
-            (e, a) -> e.getCharacter() == a.getCharacter() && e.getPosition() == a.getPosition()
-        ));
+            (e, r) -> e.getCharacter() == r.getCharacter() && e.getPosition() == r.getPosition(),
+            glyph -> "(" + glyph.getCharacter() + "," + glyph.getPosition() + ")"
+        );
     }
 }
