@@ -23,7 +23,7 @@ public @Service class NewlineProcessor {
      * Splits characters to rows by newline character.
      */
     public @Mandatory List<List<Glyph>> process(@Mandatory List<Glyph> glyphs) {
-        List<List<Glyph>> rows = new List<>(new List<>());
+        List<List<Glyph>> rows = new List<List<Glyph>>(new List<Glyph>());
         for (Glyph glyph : glyphs) {
             if (glyph.getCharacter() == '\n') {
                 rows.addLast(new List<>());

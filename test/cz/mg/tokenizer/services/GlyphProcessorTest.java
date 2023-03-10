@@ -32,7 +32,9 @@ public @Test class GlyphProcessorTest {
 
     private void testProcessing(String content, Glyph... expectedGlyphs) {
         GlyphProcessor processor = GlyphProcessor.getInstance();
+
         List<Glyph> actualGlyphs = processor.process(content);
+
         Assert.assertEquals(
             new List<>(expectedGlyphs),
             actualGlyphs,
