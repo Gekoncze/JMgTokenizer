@@ -23,6 +23,9 @@ public @Test class TokenProcessorTest {
         test.testProcessingSingleQuotes();
         test.testProcessingDoubleQuotes();
         test.testProcessingSpecials();
+        test.testProcessingSingleLineComment();
+        test.testProcessingMultiLineComment();
+        test.testProcessingSpaces();
 
         System.out.println("OK");
     }
@@ -734,8 +737,45 @@ public @Test class TokenProcessorTest {
         );
     }
 
-    // TODO test multi line comment
-    // TODO test single line comment
+    private void testProcessingSingleLineComment() {
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('/', 0),
+                new Glyph('/', 1)
+            ),
+            new List<>()
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('/', 0),
+                new Glyph('/', 1),
+                new Glyph('a', 2)
+            ),
+            new List<>()
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('a', 0),
+                new Glyph('/', 1),
+                new Glyph('/', 2)
+            ),
+            new List<>(
+                new Token(TokenType.NAME, "a", 0)
+            )
+        );
+
+        // TODO - add more tests
+    }
+
+    private void testProcessingMultiLineComment() {
+        // TODO
+    }
+
+    private void testProcessingSpaces() {
+        // TODO
+    }
 
     private void testProcessingSingleLine(List<Glyph> glyphs, List<Token> expectedTokens) {
         TokenProcessor processor = TokenProcessor.getInstance();

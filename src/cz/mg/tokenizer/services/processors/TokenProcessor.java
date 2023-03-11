@@ -27,7 +27,6 @@ public @Service class TokenProcessor {
 
     /**
      * Groups characters into tokens.
-     * Comments are removed.
      */
     public @Mandatory List<List<Token>> process(@Mandatory List<List<Glyph>> rows) {
         List<List<Token>> lines = new List<>();
