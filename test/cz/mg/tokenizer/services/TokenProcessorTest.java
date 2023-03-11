@@ -1,7 +1,10 @@
 package cz.mg.tokenizer.services;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
+import cz.mg.collections.services.CollectionComparator;
+import cz.mg.collections.services.StringJoiner;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Glyph;
 import cz.mg.tokenizer.entities.Token;
@@ -736,16 +739,34 @@ public @Test class TokenProcessorTest {
 
     private void testProcessingSingleLine(List<Glyph> glyphs, List<Token> expectedTokens) {
         TokenProcessor processor = TokenProcessor.getInstance();
-        List<List<Token>> lines = processor.process(new List<List<Glyph>>(glyphs));
+        List<List<Token>> actualLines = processor.process(new List<List<Glyph>>(glyphs));
+        Assert.assertEquals(1, actualLines.count());
+        List<Token> actualTokens = actualLines.getFirst();
+        Assert.assertEquals(expectedTokens, actualTokens, this::tokenEquals, this::tokenToString);
+    }
 
-        Assert.assertEquals(1, lines.count());
+    private void testProcessingMultipleLines(List<List<Glyph>> lines, List<List<Token>> expectedLines) {
+        TokenProcessor processor = TokenProcessor.getInstance();
+        List<List<Token>> actualLines = processor.process(lines);
+        Assert.assertEquals(expectedLines.count(), actualLines.count());
+        Assert.assertEquals(expectedLines, actualLines, this::lineEquals, this::lineToString);
+    }
 
-        List<Token> actualTokens = lines.getFirst();
-        Assert.assertEquals(
-            expectedTokens,
-            actualTokens,
-            (e, r) -> e.getType() == r.getType() && e.getText().equals(r.getText()) && e.getPosition() == r.getPosition(),
-            token -> "(" + token.getType() + ",'" + token.getText() + "'," + token.getPosition() + ")"
-        );
+    private boolean tokenEquals(@Mandatory Token expectation, @Mandatory Token reality) {
+        return expectation.getType() == reality.getType()
+            && expectation.getText().equals(reality.getText())
+            && expectation.getPosition() == reality.getPosition();
+    }
+
+    private @Mandatory String tokenToString(@Mandatory Token token) {
+        return "(" + token.getType() + ",'" + token.getText() + "'," + token.getPosition() + ")";
+    }
+
+    private boolean lineEquals(@Mandatory List<Token> expectation, @Mandatory List<Token> reality) {
+        return CollectionComparator.getInstance().equals(expectation, reality, this::tokenEquals);
+    }
+
+    private @Mandatory String lineToString(@Mandatory List<Token> line) {
+        return StringJoiner.getInstance().join(line, " ", this::tokenToString);
     }
 }
