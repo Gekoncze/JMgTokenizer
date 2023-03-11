@@ -443,11 +443,87 @@ public @Test class TokenProcessorTest {
 
     private void testProcessingSpecials() {
         testProcessingSingleLine(
-            new List<>(new Glyph('+', 0)),
-            new List<>(new Token(TokenType.SPECIAL, "+", 0))
+            new List<>(
+                new Glyph('+', 0)
+            ),
+            new List<>(
+                new Token(TokenType.SPECIAL, "+", 0)
+            )
         );
 
-        // TODO - add more tests
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('+', 0),
+                new Glyph('+', 1)
+            ),
+            new List<>(
+                new Token(TokenType.SPECIAL, "++", 0)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('a', 0),
+                new Glyph('+', 1),
+                new Glyph('=', 2),
+                new Glyph('b', 3),
+                new Glyph(';', 4)
+            ),
+            new List<>(
+                new Token(TokenType.NAME, "a", 0),
+                new Token(TokenType.SPECIAL, "+=", 1),
+                new Token(TokenType.NAME, "b", 3),
+                new Token(TokenType.SPECIAL, ";", 4)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('+', 0),
+                new Glyph('(', 1),
+                new Glyph('-', 2),
+                new Glyph('-', 3),
+                new Glyph(')', 4),
+                new Glyph('*', 5)
+            ),
+            new List<>(
+                new Token(TokenType.SPECIAL, "+", 0),
+                new Token(TokenType.SPECIAL, "(", 1),
+                new Token(TokenType.SPECIAL, "--", 2),
+                new Token(TokenType.SPECIAL, ")", 4),
+                new Token(TokenType.SPECIAL, "*", 5)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('(', 0),
+                new Glyph('(', 1),
+                new Glyph(')', 2),
+                new Glyph(')', 3)
+            ),
+            new List<>(
+                new Token(TokenType.SPECIAL, "(", 0),
+                new Token(TokenType.SPECIAL, "(", 1),
+                new Token(TokenType.SPECIAL, ")", 2),
+                new Token(TokenType.SPECIAL, ")", 3)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('(', 0),
+                new Glyph(')', 1),
+                new Glyph('(', 2),
+                new Glyph(')', 3)
+            ),
+            new List<>(
+                new Token(TokenType.SPECIAL, "(", 0),
+                new Token(TokenType.SPECIAL, ")", 1),
+                new Token(TokenType.SPECIAL, "(", 2),
+                new Token(TokenType.SPECIAL, ")", 3)
+            )
+        );
     }
 
     private void testProcessingSingleLine(List<Glyph> glyphs, List<Token> expectedTokens) {
