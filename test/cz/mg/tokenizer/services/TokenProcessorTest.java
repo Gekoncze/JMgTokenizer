@@ -19,6 +19,7 @@ public @Test class TokenProcessorTest {
         test.testProcessingNumbers();
         test.testProcessingSingleQuotes();
         test.testProcessingDoubleQuotes();
+        test.testProcessingSpecials();
 
         System.out.println("OK");
     }
@@ -138,7 +139,6 @@ public @Test class TokenProcessorTest {
 
         // TODO test multi line comment
         // TODO test single line comment
-        // TODO test multiple specials (+with brackets)
     }
 
     private void testProcessingSingleQuotes() {
@@ -209,6 +209,67 @@ public @Test class TokenProcessorTest {
                 new Glyph('\'', 4)
             ),
             new List<>(new Token(TokenType.CHARACTER, "\\'a", 0))
+        );
+
+        testProcessingSingleLine(
+            new List<>(new Glyph('\'', 0), new Glyph('(', 1), new Glyph('\'', 2), new Glyph(')', 3)),
+            new List<>(
+                new Token(TokenType.CHARACTER, "(", 0),
+                new Token(TokenType.SPECIAL, ")", 3)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(new Glyph('(', 0), new Glyph('\'', 1), new Glyph(')', 2), new Glyph('\'', 3)),
+            new List<>(
+                new Token(TokenType.SPECIAL, "(", 0),
+                new Token(TokenType.CHARACTER, ")", 1)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('\'', 0),
+                new Glyph('/', 1),
+                new Glyph('/', 2),
+                new Glyph('a', 3),
+                new Glyph('\'', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.CHARACTER, "//a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('\'', 0),
+                new Glyph('/', 1),
+                new Glyph('*', 2),
+                new Glyph('a', 3),
+                new Glyph('\'', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.CHARACTER, "/*a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('\'', 0),
+                new Glyph('*', 1),
+                new Glyph('/', 2),
+                new Glyph('a', 3),
+                new Glyph('\'', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.CHARACTER, "*/a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
         );
 
         Assert.assertExceptionThrown(TokenizeException.class, () -> {
@@ -303,6 +364,61 @@ public @Test class TokenProcessorTest {
             new List<>(new Token(TokenType.STRING, "\\\"a", 0))
         );
 
+        testProcessingSingleLine(
+            new List<>(new Glyph('"', 0), new Glyph('(', 1), new Glyph('"', 2), new Glyph(')', 3)),
+            new List<>(new Token(TokenType.STRING, "(", 0), new Token(TokenType.SPECIAL, ")", 3))
+        );
+
+        testProcessingSingleLine(
+            new List<>(new Glyph('(', 0), new Glyph('"', 1), new Glyph(')', 2), new Glyph('"', 3)),
+            new List<>(new Token(TokenType.SPECIAL, "(", 0), new Token(TokenType.STRING, ")", 1))
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('"', 0),
+                new Glyph('/', 1),
+                new Glyph('/', 2),
+                new Glyph('a', 3),
+                new Glyph('"', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.STRING, "//a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('"', 0),
+                new Glyph('/', 1),
+                new Glyph('*', 2),
+                new Glyph('a', 3),
+                new Glyph('"', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.STRING, "/*a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
+        );
+
+        testProcessingSingleLine(
+            new List<>(
+                new Glyph('"', 0),
+                new Glyph('*', 1),
+                new Glyph('/', 2),
+                new Glyph('a', 3),
+                new Glyph('"', 4),
+                new Glyph('a', 5)
+            ),
+            new List<>(
+                new Token(TokenType.STRING, "*/a", 0),
+                new Token(TokenType.NAME, "a", 5)
+            )
+        );
+
         Assert.assertExceptionThrown(TokenizeException.class, () -> {
             testProcessingSingleLine(
                 new List<>(new Glyph('"', 0)),
@@ -323,6 +439,15 @@ public @Test class TokenProcessorTest {
                 new List<>()
             );
         });
+    }
+
+    private void testProcessingSpecials() {
+        testProcessingSingleLine(
+            new List<>(new Glyph('+', 0)),
+            new List<>(new Token(TokenType.SPECIAL, "+", 0))
+        );
+
+        // TODO - add more tests
     }
 
     private void testProcessingSingleLine(List<Glyph> glyphs, List<Token> expectedTokens) {
