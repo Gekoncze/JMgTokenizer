@@ -3,5 +3,7 @@ add tests
     add PositionServiceTest
     add TokenReaderTest
 
+add test for all services together
+
 allow space and comment tokens
     also add processor that will be able to remove them
