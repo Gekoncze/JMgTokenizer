@@ -1,5 +1,5 @@
 add tests
-    add TokenProcessor
+    add TokenProcessorTest
     add PositionServiceTest
     add TokenReaderTest
 
