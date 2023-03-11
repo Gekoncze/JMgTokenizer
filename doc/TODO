@@ -1,8 +1,10 @@
 add tests
-    add NewlineProcessorTest
     add TokenProcessor
     add PositionServiceTest
     add TokenReaderTest
 
 allow space and comment tokens
     also add processor that will be able to remove them
+
+allow escape sequences in strings, especially for double quotes
+allow escape sequences in characters, especially for single quotes

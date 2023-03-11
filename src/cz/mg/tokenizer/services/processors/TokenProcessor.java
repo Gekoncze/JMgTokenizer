@@ -142,7 +142,7 @@ public @Service class TokenProcessor {
                 pch = ch;
             }
 
-            if (type == TokenType.NAME || type == TokenType.NUMBER) {
+            if (type == TokenType.NAME || type == TokenType.NUMBER || type == TokenType.SPECIAL) {
                 line.addLast(create(type, text.toString(), start));
             }
 
