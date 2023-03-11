@@ -1,9 +1,9 @@
-add tests
-    add TokenProcessorTest
-    add PositionServiceTest
-    add TokenReaderTest
+implement
+    token parsers
 
-add test for all processors together
+add unit tests
+    for parsers
+    for tokenizer
+    for readers
 
-allow space and comment tokens
-    also add processor that will be able to remove them
+spaces and comments should be removed in code preprocessor or code parser

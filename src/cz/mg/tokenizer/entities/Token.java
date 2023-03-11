@@ -5,26 +5,15 @@ import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Value;
 
 public @Entity class Token {
-    private TokenType type;
     private String text;
     private int position;
 
     public Token() {
     }
 
-    public Token(TokenType type, String text, int position) {
-        this.type = type;
+    public Token(String text, int position) {
         this.text = text;
         this.position = position;
-    }
-
-    @Required @Value
-    public TokenType getType() {
-        return type;
-    }
-
-    public void setType(TokenType type) {
-        this.type = type;
     }
 
     @Required @Value
