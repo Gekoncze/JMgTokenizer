@@ -19,7 +19,24 @@ public @Service class NumberTokenParser implements TokenParser {
         return instance;
     }
 
+    private final boolean[] NUMBER = new boolean[128];
+    private final boolean[] NUMBER_OR_OTHER = new boolean[128];
+
     private NumberTokenParser() {
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            NUMBER_OR_OTHER[ch] = true;
+        }
+
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            NUMBER_OR_OTHER[ch] = true;
+        }
+
+        for (char ch = '0'; ch <= '9'; ch++) {
+            NUMBER[ch] = true;
+            NUMBER_OR_OTHER[ch] = true;
+        }
+
+        NUMBER_OR_OTHER['.'] = true;
     }
 
     @Override
@@ -33,7 +50,7 @@ public @Service class NumberTokenParser implements TokenParser {
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         while (reader.has()) {
-            if (reader.has(this::number) || reader.has(this::dot) || reader.has(this::uppercase) || reader.has(this::lowercase)) {
+            if (reader.has(this::numberOrOther)) {
                 builder.getText().append(reader.next());
             } else {
                 break;
@@ -42,19 +59,11 @@ public @Service class NumberTokenParser implements TokenParser {
         return builder.build(NumberToken::new);
     }
 
-    private boolean uppercase(char ch) {
-        return ch >= 'A' && ch <= 'Z';
-    }
-
-    private boolean lowercase(char ch) {
-        return ch >= 'a' && ch <= 'z';
-    }
-
     private boolean number(char ch) {
-        return ch >= '0' && ch <= '9';
+        return ch < NUMBER.length && NUMBER[ch];
     }
 
-    private boolean dot(char ch) {
-        return ch == '.';
+    private boolean numberOrOther(char ch) {
+        return ch < NUMBER_OR_OTHER.length && NUMBER_OR_OTHER[ch];
     }
 }
