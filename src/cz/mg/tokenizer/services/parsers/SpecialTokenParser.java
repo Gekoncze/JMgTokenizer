@@ -19,7 +19,36 @@ public @Service class SpecialTokenParser implements TokenParser {
         return instance;
     }
 
+    private final boolean[] ARRAY = new boolean[128];
+
     private SpecialTokenParser() {
+        ARRAY['+'] = true;
+        ARRAY['-'] = true;
+        ARRAY['*'] = true;
+        ARRAY['/'] = true;
+        ARRAY['%'] = true;
+        ARRAY['^'] = true;
+        ARRAY['<'] = true;
+        ARRAY['>'] = true;
+        ARRAY['='] = true;
+        ARRAY['~'] = true;
+        ARRAY['!'] = true;
+        ARRAY['&'] = true;
+        ARRAY['|'] = true;
+        ARRAY['.'] = true;
+        ARRAY[','] = true;
+        ARRAY[';'] = true;
+        ARRAY['('] = true;
+        ARRAY[')'] = true;
+        ARRAY['['] = true;
+        ARRAY[']'] = true;
+        ARRAY['{'] = true;
+        ARRAY['}'] = true;
+        ARRAY['?'] = true;
+        ARRAY[':'] = true;
+        ARRAY['@'] = true;
+        ARRAY['$'] = true;
+        ARRAY['#'] = true;
     }
 
     @Override
@@ -33,11 +62,6 @@ public @Service class SpecialTokenParser implements TokenParser {
     }
 
     private boolean isSpecial(char ch) {
-        return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '%' || ch == '^'
-            || ch == '<' || ch == '>' || ch == '=' || ch == '~' || ch == '!' || ch == '&' || ch == '|'
-            || ch == '.' || ch == ',' || ch == ';'
-            || ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}'
-            || ch == '?' || ch == ':'
-            || ch == '@' || ch == '$' || ch == '#';
+        return ARRAY[ch];
     }
 }
