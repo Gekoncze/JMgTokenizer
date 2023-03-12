@@ -2,7 +2,7 @@ package cz.mg.tokenizer.utilities;
 
 import cz.mg.annotations.classes.Utility;
 
-public @Utility class TokenizeException extends LocableException {
+public @Utility class TokenizeException extends CodeException {
     public TokenizeException(int position, String message) {
         super(position, message);
     }
