@@ -24,8 +24,7 @@ public @Service class NameTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        char ch = reader.read();
-        if (isUppercase(ch) || isLowercase(ch) || isUnderscore(ch)) {
+        if (reader.has(this::uppercase) || reader.has(this::lowercase) || reader.has(this::underscore)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -33,31 +32,29 @@ public @Service class NameTokenParser implements TokenParser {
     }
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
-        while (reader.hasNext()) {
-            char ch = reader.next();
-            if (isUppercase(ch) || isLowercase(ch) || isUnderscore(ch) || isNumber(ch)) {
-                builder.getText().append(ch);
+        while (reader.has()) {
+            if (reader.has(this::uppercase) || reader.has(this::lowercase) || reader.has(this::underscore) || reader.has(this::number)) {
+                builder.getText().append(reader.next());
             } else {
-                reader.previous();
                 break;
             }
         }
         return builder.build(NameToken::new);
     }
 
-    private boolean isUppercase(char ch) {
+    private boolean uppercase(char ch) {
         return ch >= 'A' && ch <= 'Z';
     }
 
-    private boolean isLowercase(char ch) {
+    private boolean lowercase(char ch) {
         return ch >= 'a' && ch <= 'z';
     }
 
-    private boolean isNumber(char ch) {
+    private boolean number(char ch) {
         return ch >= '0' && ch <= '9';
     }
 
-    private boolean isUnderscore(char ch) {
+    private boolean underscore(char ch) {
         return ch == '_';
     }
 }

@@ -8,6 +8,7 @@ import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
+import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Service class DocumentationTokenParser implements TokenParser {
     private static @Optional DocumentationTokenParser instance;
@@ -24,7 +25,7 @@ public @Service class DocumentationTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has('/') && reader.hasNext('*')) {
+        if (reader.has(this::slash) && reader.hasNext(this::star)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -34,15 +35,23 @@ public @Service class DocumentationTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         reader.next();
         reader.next();
-        while (reader.hasNext()) {
-            char ch = reader.next();
-            if (ch == '*' && reader.hasNext('/')) {
+        while (reader.has()) {
+            if (reader.has(this::star) && reader.hasNext(this::slash)) {
                 reader.next();
-                break;
+                reader.next();
+                return builder.build(DoubleQuoteToken::new);
             } else {
-                builder.getText().append(ch);
+                builder.getText().append(reader.next());
             }
         }
-        return builder.build(DoubleQuoteToken::new);
+        throw new TokenizeException(builder.getPosition(), "Unclosed documentation.");
+    }
+
+    private boolean slash(char ch) {
+        return ch == '/';
+    }
+
+    private boolean star(char ch) {
+        return ch == '*';
     }
 }

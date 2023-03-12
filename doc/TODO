@@ -1,4 +1,5 @@
-add has next with comparator or list of characters to character reader
+should quotes be terminated by newline with an exception?
+optimize name and token parser using array
 
 add unit tests
     for parsers

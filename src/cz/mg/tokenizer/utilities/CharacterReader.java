@@ -40,6 +40,18 @@ public @Utility class CharacterReader {
         return hasPrevious() && content.charAt(position - 1) == ch;
     }
 
+    public boolean has(CharacterPredicate predicate) {
+        return has() && predicate.match(content.charAt(position));
+    }
+
+    public boolean hasNext(CharacterPredicate predicate) {
+        return hasNext() && predicate.match(content.charAt(position + 1));
+    }
+
+    public boolean hasPrevious(CharacterPredicate predicate) {
+        return hasPrevious() && predicate.match(content.charAt(position - 1));
+    }
+
     public char read() {
         if (has()) {
             return content.charAt(position);
@@ -86,5 +98,9 @@ public @Utility class CharacterReader {
                 "Expected character '" + c + "', but got '" + ch + "'."
             );
         }
+    }
+
+    public interface CharacterPredicate {
+        boolean match(char ch);
     }
 }

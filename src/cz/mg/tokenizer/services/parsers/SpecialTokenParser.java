@@ -53,15 +53,14 @@ public @Service class SpecialTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        char ch = reader.read();
-        if (isSpecial(ch)) {
+        if (reader.has(this::special)) {
             return TokenBuilder.next(reader).build(SpecialToken::new);
         } else {
             return null;
         }
     }
 
-    private boolean isSpecial(char ch) {
-        return ARRAY[ch];
+    private boolean special(char ch) {
+        return ch < ARRAY.length && ARRAY[ch];
     }
 }

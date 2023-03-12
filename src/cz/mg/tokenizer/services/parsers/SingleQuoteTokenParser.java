@@ -8,6 +8,7 @@ import cz.mg.tokenizer.entities.tokens.SingleQuoteToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
+import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Service class SingleQuoteTokenParser implements TokenParser {
     private static @Optional SingleQuoteTokenParser instance;
@@ -24,8 +25,7 @@ public @Service class SingleQuoteTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        char ch = reader.read();
-        if (isSingleQuote(ch)) {
+        if (reader.has(this::singleQuote)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -34,23 +34,22 @@ public @Service class SingleQuoteTokenParser implements TokenParser {
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         reader.next();
-        while (reader.hasNext()) {
-            char pch = reader.read();
-            char ch = reader.next();
-            if (!isBackslash(pch) && isSingleQuote(ch)) {
-                break;
+        while (reader.has()) {
+            if (reader.has(this::singleQuote) && !reader.hasPrevious(this::backslash)) {
+                reader.next();
+                return builder.build(SingleQuoteToken::new);
             } else {
-                builder.getText().append(ch);
+                builder.getText().append(reader.next());
             }
         }
-        return builder.build(SingleQuoteToken::new);
+        throw new TokenizeException(builder.getPosition(), "Unclosed single quotes.");
     }
 
-    private boolean isSingleQuote(char ch) {
+    private boolean singleQuote(char ch) {
         return ch == '\'';
     }
 
-    private boolean isBackslash(char ch) {
+    private boolean backslash(char ch) {
         return ch == '\\';
     }
 }

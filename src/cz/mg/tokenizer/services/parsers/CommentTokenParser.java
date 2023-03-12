@@ -24,7 +24,7 @@ public @Service class CommentTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has('/') && reader.hasNext('/')) {
+        if (reader.has(this::slash) && reader.hasNext(this::slash)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -34,19 +34,21 @@ public @Service class CommentTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         reader.next();
         reader.next();
-        while (reader.hasNext()) {
-            char ch = reader.next();
-            if (isNewline(ch)) {
-                reader.previous();
+        while (reader.has()) {
+            if (reader.has(this::newline)) {
                 break;
             } else {
-                builder.getText().append(ch);
+                builder.getText().append(reader.next());
             }
         }
         return builder.build(DoubleQuoteToken::new);
     }
 
-    private boolean isNewline(char ch) {
+    private boolean slash(char ch) {
+        return ch == '/';
+    }
+
+    private boolean newline(char ch) {
         return ch == '\n';
     }
 }

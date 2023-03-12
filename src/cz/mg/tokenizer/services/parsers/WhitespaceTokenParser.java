@@ -24,10 +24,9 @@ public @Service class WhitespaceTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        char ch = reader.read();
-        if (isSpace(ch)) {
+        if (reader.has(this::space)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
-        } else if (isTab(ch) || isNewline(ch)) {
+        } else if (reader.has(this::tab) || reader.has(this::newline)) {
             return TokenBuilder.next(reader).build(WhitespaceToken::new);
         } else {
             return null;
@@ -35,27 +34,25 @@ public @Service class WhitespaceTokenParser implements TokenParser {
     }
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
-        while (reader.hasNext()) {
-            char ch = reader.next();
-            if (ch == ' ') {
-                builder.getText().append(ch);
+        while (reader.has()) {
+            if (reader.has(this::space)) {
+                builder.getText().append(reader.next());
             } else {
-                reader.previous();
                 break;
             }
         }
         return builder.build(WhitespaceToken::new);
     }
 
-    private boolean isSpace(char ch) {
+    private boolean space(char ch) {
         return ch == ' ';
     }
 
-    private boolean isTab(char ch) {
+    private boolean tab(char ch) {
         return ch == '\t';
     }
 
-    private boolean isNewline(char ch) {
+    private boolean newline(char ch) {
         return ch == '\n';
     }
 }
