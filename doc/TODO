@@ -1,4 +1,3 @@
-should quotes be terminated by newline with an exception?
 optimize name and token parser using array
 
 add unit tests

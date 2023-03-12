@@ -5,26 +5,45 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
-import cz.mg.tokenizer.utilities.TokenBuilder;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
+import cz.mg.tokenizer.utilities.TokenBuilder;
 
-public @Service class NameTokenParser implements TokenParser {
-    private static @Optional NameTokenParser instance;
+public @Service class OptimizedNameTokenParser implements TokenParser {
+    private static @Optional OptimizedNameTokenParser instance;
 
-    public static @Mandatory NameTokenParser getInstance() {
+    public static @Mandatory OptimizedNameTokenParser getInstance() {
         if (instance == null) {
-            instance = new NameTokenParser();
+            instance = new OptimizedNameTokenParser();
         }
         return instance;
     }
 
-    private NameTokenParser() {
+    private final boolean[] NAME = new boolean[128];
+    private final boolean[] NAME_OR_NUMBER = new boolean[128];
+
+    private OptimizedNameTokenParser() {
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            NAME[ch] = true;
+            NAME_OR_NUMBER[ch] = true;
+        }
+
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            NAME[ch] = true;
+            NAME_OR_NUMBER[ch] = true;
+        }
+
+        for (char ch = '0'; ch <= '9'; ch++) {
+            NAME_OR_NUMBER[ch] = true;
+        }
+
+        NAME['_'] = true;
+        NAME_OR_NUMBER['_'] = true;
     }
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::uppercase) || reader.has(this::lowercase) || reader.has(this::underscore)) {
+        if (reader.has(this::name)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -33,7 +52,7 @@ public @Service class NameTokenParser implements TokenParser {
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         while (reader.has()) {
-            if (reader.has(this::uppercase) || reader.has(this::lowercase) || reader.has(this::underscore) || reader.has(this::number)) {
+            if (reader.has(this::nameOrNumber)) {
                 builder.getText().append(reader.next());
             } else {
                 break;
@@ -43,26 +62,10 @@ public @Service class NameTokenParser implements TokenParser {
     }
 
     private boolean name(char ch) {
-        return uppercase(ch) || lowercase(ch) || underscore(ch);
+        return ch < NAME.length && NAME[ch];
     }
 
     public boolean nameOrNumber(char ch) { // TODO - make private
-        return name(ch) || number(ch);
-    }
-
-    private boolean uppercase(char ch) {
-        return ch >= 'A' && ch <= 'Z';
-    }
-
-    private boolean lowercase(char ch) {
-        return ch >= 'a' && ch <= 'z';
-    }
-
-    private boolean number(char ch) {
-        return ch >= '0' && ch <= '9';
-    }
-
-    private boolean underscore(char ch) {
-        return ch == '_';
+        return ch < NAME_OR_NUMBER.length && NAME_OR_NUMBER[ch];
     }
 }

@@ -19,36 +19,36 @@ public @Service class SpecialTokenParser implements TokenParser {
         return instance;
     }
 
-    private final boolean[] ARRAY = new boolean[128];
+    private final boolean[] SPECIAL = new boolean[128];
 
     private SpecialTokenParser() {
-        ARRAY['+'] = true;
-        ARRAY['-'] = true;
-        ARRAY['*'] = true;
-        ARRAY['/'] = true;
-        ARRAY['%'] = true;
-        ARRAY['^'] = true;
-        ARRAY['<'] = true;
-        ARRAY['>'] = true;
-        ARRAY['='] = true;
-        ARRAY['~'] = true;
-        ARRAY['!'] = true;
-        ARRAY['&'] = true;
-        ARRAY['|'] = true;
-        ARRAY['.'] = true;
-        ARRAY[','] = true;
-        ARRAY[';'] = true;
-        ARRAY['('] = true;
-        ARRAY[')'] = true;
-        ARRAY['['] = true;
-        ARRAY[']'] = true;
-        ARRAY['{'] = true;
-        ARRAY['}'] = true;
-        ARRAY['?'] = true;
-        ARRAY[':'] = true;
-        ARRAY['@'] = true;
-        ARRAY['$'] = true;
-        ARRAY['#'] = true;
+        SPECIAL['+'] = true;
+        SPECIAL['-'] = true;
+        SPECIAL['*'] = true;
+        SPECIAL['/'] = true;
+        SPECIAL['%'] = true;
+        SPECIAL['^'] = true;
+        SPECIAL['<'] = true;
+        SPECIAL['>'] = true;
+        SPECIAL['='] = true;
+        SPECIAL['~'] = true;
+        SPECIAL['!'] = true;
+        SPECIAL['&'] = true;
+        SPECIAL['|'] = true;
+        SPECIAL['.'] = true;
+        SPECIAL[','] = true;
+        SPECIAL[';'] = true;
+        SPECIAL['('] = true;
+        SPECIAL[')'] = true;
+        SPECIAL['['] = true;
+        SPECIAL[']'] = true;
+        SPECIAL['{'] = true;
+        SPECIAL['}'] = true;
+        SPECIAL['?'] = true;
+        SPECIAL[':'] = true;
+        SPECIAL['@'] = true;
+        SPECIAL['$'] = true;
+        SPECIAL['#'] = true;
     }
 
     @Override
@@ -61,6 +61,6 @@ public @Service class SpecialTokenParser implements TokenParser {
     }
 
     private boolean special(char ch) {
-        return ch < ARRAY.length && ARRAY[ch];
+        return ch < SPECIAL.length && SPECIAL[ch];
     }
 }
