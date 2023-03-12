@@ -150,22 +150,6 @@ public @Service class TokenProcessor {
 //        return lines;
 //    }
 
-    private boolean isSingleQuote(char ch) {
-        return ch == '\'';
-    }
-
-    private boolean isDoubleQuote(char ch) {
-        return ch == '"';
-    }
-
-    private boolean isBackslash(char ch) {
-        return ch == '\\';
-    }
-
-    private boolean isUnderscore(char ch) {
-        return ch == '_';
-    }
-
     private boolean isSingleLineComment(char pch, char ch) {
         return pch == '/' && ch == '/';
     }

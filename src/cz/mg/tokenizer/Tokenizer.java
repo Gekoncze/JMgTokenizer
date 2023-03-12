@@ -6,10 +6,7 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.services.TokenParser;
-import cz.mg.tokenizer.services.parsers.NameTokenParser;
-import cz.mg.tokenizer.services.parsers.NumberTokenParser;
-import cz.mg.tokenizer.services.parsers.SpecialTokenParser;
-import cz.mg.tokenizer.services.parsers.WhitespaceTokenParser;
+import cz.mg.tokenizer.services.parsers.*;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenizeException;
 
@@ -23,8 +20,8 @@ public @Service class Tokenizer {
                 // TODO
                 //CommentParser.getInstance(),
                 //DocumentationParser.getInstance(),
-                //CharacterTokenParser.getInstance(),
-                //StringTokenParser.getInstance(),
+                SingleQuoteTokenParser.getInstance(),
+                DoubleQuoteTokenParser.getInstance(),
                 WhitespaceTokenParser.getInstance(),
                 NumberTokenParser.getInstance(),
                 NameTokenParser.getInstance(),
