@@ -17,9 +17,8 @@ public @Service class Tokenizer {
         if (instance == null) {
             instance = new Tokenizer();
             instance.parsers = new List<>(
-                // TODO
-                //CommentParser.getInstance(),
-                //DocumentationParser.getInstance(),
+                CommentTokenParser.getInstance(),
+                DocumentationTokenParser.getInstance(),
                 SingleQuoteTokenParser.getInstance(),
                 DoubleQuoteTokenParser.getInstance(),
                 WhitespaceTokenParser.getInstance(),
