@@ -102,7 +102,11 @@ public @Utility class TokenReader {
 
     public void validate() {
         if (item == null) {
-            throw new TokenizeException(tokens.getLast().getPosition(), "Missing token.");
+            if (tokens.isEmpty()) {
+                throw new TokenizeException(-1, "No tokens.");
+            } else {
+                throw new TokenizeException(tokens.getLast().getPosition(), "Missing token.");
+            }
         }
     }
 

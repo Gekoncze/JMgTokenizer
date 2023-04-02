@@ -110,6 +110,7 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(1, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('a'));
         Assert.assertEquals(true, reader.hasPrevious(ch -> ch == 'a'));
+        Assert.assertEquals(false, reader.hasNext());
         reader.reset();
 
         Assert.assertEquals(0, reader.getPosition());
@@ -124,6 +125,8 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(1, reader.getPosition());
         reader.reset();
 
+        Assert.assertEquals(0, reader.getPosition());
+
         Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read(' '));
         Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read(ch -> false));
 
@@ -135,31 +138,55 @@ public @Test class CharacterReaderTest {
 
         Assert.assertEquals(0, reader.getPosition());
         Assert.assertEquals(false, reader.hasPrevious());
+        Assert.assertEquals(false, reader.hasPrevious(ch -> true));
         Assert.assertEquals(true, reader.has('a'));
+        Assert.assertEquals(true, reader.has(ch -> ch == 'a'));
         Assert.assertEquals(true, reader.hasNext('\n'));
+        Assert.assertEquals(true, reader.hasNext(ch -> ch == '\n'));
 
         Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read('\n'));
-        Assert.assertEquals('a', reader.read('a'));
+        Assert.assertEquals('a', reader.read());
         Assert.assertEquals(1, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('a'));
+        Assert.assertEquals(true, reader.hasPrevious(ch -> ch == 'a'));
         Assert.assertEquals(true, reader.has('\n'));
+        Assert.assertEquals(true, reader.has(ch -> ch == '\n'));
         Assert.assertEquals(true, reader.hasNext(' '));
+        Assert.assertEquals(true, reader.hasNext(ch -> ch == ' '));
 
         Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read('a'));
-        Assert.assertEquals('\n', reader.read('\n'));
+        Assert.assertEquals('\n', reader.read());
         Assert.assertEquals(2, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('\n'));
+        Assert.assertEquals(true, reader.hasPrevious(ch -> ch == '\n'));
         Assert.assertEquals(true, reader.has(' '));
+        Assert.assertEquals(true, reader.has(ch -> ch == ' '));
         Assert.assertEquals(false, reader.hasNext());
+        Assert.assertEquals(false, reader.hasNext(ch -> true));
 
         Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read('1'));
-        Assert.assertEquals(' ', reader.read(' '));
+        Assert.assertEquals(' ', reader.read());
         Assert.assertEquals(3, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious(' '));
+        Assert.assertEquals(true, reader.hasPrevious(ch -> ch == ' '));
         Assert.assertEquals(false, reader.has());
+        Assert.assertEquals(false, reader.has(ch -> true));
         Assert.assertEquals(false, reader.hasNext());
+        Assert.assertEquals(false, reader.hasNext(ch -> true));
 
         Assert.assertExceptionThrown(TokenizeException.class, reader::read);
         Assert.assertEquals(3, reader.getPosition());
+
+        reader.reset();
+
+        Assert.assertEquals('a', reader.read('a'));
+        Assert.assertEquals('\n', reader.read('\n'));
+        Assert.assertEquals(' ', reader.read(' '));
+
+        reader.reset();
+
+        Assert.assertEquals('a', reader.read(ch -> true));
+        Assert.assertEquals('\n', reader.read(ch -> true));
+        Assert.assertEquals(' ', reader.read(ch -> true));
     }
 }
