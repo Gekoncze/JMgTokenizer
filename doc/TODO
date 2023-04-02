@@ -1,6 +1,5 @@
 add unit tests
     for all parsers
     for tokenizer
-    for position service
 
 spaces and comments should be removed in code preprocessor or code parser
