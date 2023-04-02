@@ -91,7 +91,7 @@ public @Utility class CharacterReader {
 
     private void validate() {
         if (!has()) {
-            throw new TokenizeException(position, "Missing character.");
+            throw new TokenizeException(position - 1, "Missing character.");
         }
     }
 

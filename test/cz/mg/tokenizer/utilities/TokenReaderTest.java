@@ -157,9 +157,9 @@ public @Test class TokenReaderTest {
     }
 
     private void testMultiple() {
-        Token nameToken = new NameToken("a", 0);
+        Token nameToken = new NameToken("a", -123);
         Token numberToken = new NumberToken("1", 1);
-        Token emptyToken = new Token("", 3);
+        Token emptyToken = new Token("", 333);
         List<Token> list = new List<>(nameToken, numberToken, emptyToken);
         TokenReader reader = new TokenReader(list);
 
@@ -281,5 +281,15 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(nameToken, reader.read(t -> true));
         Assert.assertEquals(numberToken, reader.read(t -> true));
         Assert.assertEquals(emptyToken, reader.read(t -> true));
+
+        Assert.assertEquals(
+            333, Assert.assertExceptionThrown(TokenizeException.class, reader::read).getPosition()
+        );
+
+        reader.reset();
+
+        Assert.assertEquals(
+            -123, Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read("?")).getPosition()
+        );
     }
 }

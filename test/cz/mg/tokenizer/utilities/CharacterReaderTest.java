@@ -188,5 +188,15 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals('a', reader.read(ch -> true));
         Assert.assertEquals('\n', reader.read(ch -> true));
         Assert.assertEquals(' ', reader.read(ch -> true));
+
+        Assert.assertEquals(
+            2, Assert.assertExceptionThrown(TokenizeException.class, reader::read).getPosition()
+        );
+
+        reader.reset();
+
+        Assert.assertEquals(
+            0, Assert.assertExceptionThrown(TokenizeException.class, () -> reader.read('?')).getPosition()
+        );
     }
 }
