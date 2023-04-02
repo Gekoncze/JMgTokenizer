@@ -33,11 +33,11 @@ public @Utility class CharacterReader {
     }
 
     public boolean hasNext(char ch) {
-        return hasNext() && content.charAt(position + 1) == ch;
+        return has() && hasNext() && content.charAt(position + 1) == ch;
     }
 
     public boolean hasPrevious(char ch) {
-        return hasPrevious() && content.charAt(position - 1) == ch;
+        return has() && hasPrevious() && content.charAt(position - 1) == ch;
     }
 
     public boolean has(@Mandatory CharacterPredicate predicate) {
@@ -45,11 +45,11 @@ public @Utility class CharacterReader {
     }
 
     public boolean hasNext(@Mandatory CharacterPredicate predicate) {
-        return hasNext() && predicate.match(content.charAt(position + 1));
+        return has() && hasNext() && predicate.match(content.charAt(position + 1));
     }
 
     public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
-        return hasPrevious() && predicate.match(content.charAt(position - 1));
+        return has() && hasPrevious() && predicate.match(content.charAt(position - 1));
     }
 
     public char read() {
@@ -128,6 +128,10 @@ public @Utility class CharacterReader {
                 "Expected character matching predicate '" + predicate + "', but got '" + ch + "'."
             );
         }
+    }
+
+    public void reset() {
+        position = 0;
     }
 
     public interface CharacterPredicate {

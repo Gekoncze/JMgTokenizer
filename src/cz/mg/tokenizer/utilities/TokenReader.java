@@ -169,6 +169,10 @@ public @Utility class TokenReader {
         }
     }
 
+    public void reset() {
+        item = tokens.getFirstItem();
+    }
+
     public interface TokenPredicate {
         boolean match(@Mandatory Token token);
     }
