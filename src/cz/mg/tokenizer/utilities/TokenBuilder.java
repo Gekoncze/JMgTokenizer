@@ -41,7 +41,7 @@ public @Utility class TokenBuilder {
     public static @Mandatory TokenBuilder next(@Mandatory CharacterReader reader) {
         return new TokenBuilder(
             reader.getPosition(),
-            reader.next()
+            reader.read()
         );
     }
 }

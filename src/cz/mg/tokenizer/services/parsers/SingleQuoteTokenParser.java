@@ -33,13 +33,13 @@ public @Service class SingleQuoteTokenParser implements TokenParser {
     }
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
-        reader.next();
+        reader.read();
         while (reader.has()) {
-            if (reader.has(this::singleQuote) && !reader.hasPrevious(this::backslash)) {
-                reader.next();
+            if (reader.has(this::singleQuote) && !reader.hasNext(this::backslash)) {
+                reader.read();
                 return builder.build(SingleQuoteToken::new);
             } else {
-                builder.getText().append(reader.next());
+                builder.getText().append(reader.read());
             }
         }
         throw new TokenizeException(builder.getPosition(), "Unclosed single quotes.");

@@ -25,7 +25,7 @@ public @Service class DocumentationTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::slash) && reader.hasNext(this::star)) {
+        if (reader.has(this::slash) && reader.hasPrevious(this::star)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -33,15 +33,15 @@ public @Service class DocumentationTokenParser implements TokenParser {
     }
 
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
-        reader.next();
-        reader.next();
+        reader.read();
+        reader.read();
         while (reader.has()) {
-            if (reader.has(this::star) && reader.hasNext(this::slash)) {
-                reader.next();
-                reader.next();
+            if (reader.has(this::star) && reader.hasPrevious(this::slash)) {
+                reader.read();
+                reader.read();
                 return builder.build(DoubleQuoteToken::new);
             } else {
-                builder.getText().append(reader.next());
+                builder.getText().append(reader.read());
             }
         }
         throw new TokenizeException(builder.getPosition(), "Unclosed documentation.");

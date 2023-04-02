@@ -36,7 +36,7 @@ public @Service class WhitespaceTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         while (reader.has()) {
             if (reader.has(this::space)) {
-                builder.getText().append(reader.next());
+                builder.getText().append(reader.read());
             } else {
                 break;
             }

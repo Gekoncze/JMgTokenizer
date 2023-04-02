@@ -12,6 +12,10 @@ public @Utility class CharacterReader {
         this.position = 0;
     }
 
+    public void reset() {
+        position = 0;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -20,118 +24,97 @@ public @Utility class CharacterReader {
         return position >= 0 && position < content.length();
     }
 
-    public boolean hasNext() {
+    public boolean hasPrevious() {
         return (position + 1) >= 0 && (position + 1) < content.length();
     }
 
-    public boolean hasPrevious() {
+    public boolean hasNext() {
         return (position - 1) >= 0 && (position - 1) < content.length();
+    }
+
+    public boolean hasAt(int delta) {
+        return (position + delta) >= 0 && (position + delta) < content.length();
     }
 
     public boolean has(char ch) {
         return has() && content.charAt(position) == ch;
     }
 
-    public boolean hasNext(char ch) {
-        return has() && hasNext() && content.charAt(position + 1) == ch;
+    public boolean hasPrevious(char ch) {
+        return hasPrevious() && content.charAt(position + 1) == ch;
     }
 
-    public boolean hasPrevious(char ch) {
-        return has() && hasPrevious() && content.charAt(position - 1) == ch;
+    public boolean hasNext(char ch) {
+        return hasNext() && content.charAt(position - 1) == ch;
+    }
+
+    public boolean hasAt(char ch, int delta) {
+        return hasNext() && content.charAt(position + delta) == ch;
     }
 
     public boolean has(@Mandatory CharacterPredicate predicate) {
         return has() && predicate.match(content.charAt(position));
     }
 
-    public boolean hasNext(@Mandatory CharacterPredicate predicate) {
-        return has() && hasNext() && predicate.match(content.charAt(position + 1));
+    public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
+        return hasPrevious() && predicate.match(content.charAt(position + 1));
     }
 
-    public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
-        return has() && hasPrevious() && predicate.match(content.charAt(position - 1));
+    public boolean hasNext(@Mandatory CharacterPredicate predicate) {
+        return hasNext() && predicate.match(content.charAt(position - 1));
+    }
+
+    public boolean hasAt(@Mandatory CharacterPredicate predicate, int delta) {
+        return hasNext() && predicate.match(content.charAt(position + delta));
     }
 
     public char read() {
-        if (has()) {
-            return content.charAt(position);
-        } else {
-            throw new TokenizeException(position, "Missing character.");
-        }
+        validate();
+        return move();
     }
 
     public char read(char ch) {
         validate(ch);
-        return read();
+        return move();
     }
 
     public char read(@Mandatory CharacterPredicate predicate) {
         validate(predicate);
-        return read();
+        return move();
     }
 
-    public char next() {
-        if (has()) {
-            char ch = content.charAt(position);
-            position++;
-            return ch;
-        } else {
+    private char move() {
+        char ch = content.charAt(position);
+        position++;
+        return ch;
+    }
+
+    private void validate() {
+        if (!has()) {
             throw new TokenizeException(position, "Missing character.");
         }
     }
 
-    public char next(char ch) {
-        validate(ch);
-        return next();
-    }
-
-    public char next(@Mandatory CharacterPredicate predicate) {
-        validate(predicate);
-        return next();
-    }
-
-    public char previous() {
-        if (has()) {
-            char ch = content.charAt(position);
-            position--;
-            return ch;
-        } else {
-            throw new TokenizeException(position, "Missing character.");
-        }
-    }
-
-    public char previous(char ch) {
-        validate(ch);
-        return previous();
-    }
-
-    public char previous(@Mandatory CharacterPredicate predicate) {
-        validate(predicate);
-        return previous();
-    }
-
-    public void validate(char c) {
-        char ch = read();
-        if (ch != c) {
+    private void validate(char ch) {
+        validate();
+        char cc = content.charAt(position);
+        if (cc != ch) {
             throw new TokenizeException(
                 position,
-                "Expected character '" + c + "', but got '" + ch + "'."
+                "Expected character '" + ch + "', but got '" + cc + "'."
             );
         }
     }
 
-    public void validate(@Mandatory CharacterPredicate predicate) {
-        char ch = read();
+    private void validate(@Mandatory CharacterPredicate predicate) {
+        validate();
+        char ch = content.charAt(position);
         if (!predicate.match(ch)) {
             throw new TokenizeException(
                 position,
                 "Expected character matching predicate '" + predicate + "', but got '" + ch + "'."
             );
         }
-    }
-
-    public void reset() {
-        position = 0;
     }
 
     public interface CharacterPredicate {

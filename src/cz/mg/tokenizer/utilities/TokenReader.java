@@ -3,11 +3,9 @@ package cz.mg.tokenizer.utilities;
 import cz.mg.annotations.classes.Utility;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
-
-import java.util.NoSuchElementException;
+import cz.mg.tokenizer.entities.Token;
 
 public @Utility class TokenReader {
     private final @Mandatory List<Token> tokens;
@@ -16,6 +14,10 @@ public @Utility class TokenReader {
     public TokenReader(@Mandatory List<Token> tokens) {
         this.tokens = tokens;
         this.item = tokens.getFirstItem();
+    }
+
+    public void reset() {
+        item = tokens.getFirstItem();
     }
 
     public boolean has() {
@@ -67,80 +69,42 @@ public @Utility class TokenReader {
     }
 
     public @Mandatory Token read() {
-        if (item != null) {
-            return item.get();
-        } else {
-            throw new NoSuchElementException("Missing token.");
-        }
+        validate();
+        return move();
     }
 
     public @Mandatory Token read(@Mandatory Class<? extends Token> type) {
         validate(type);
-        return read();
+        return move();
     }
 
     public @Mandatory Token read(@Mandatory String text) {
         validate(text);
-        return read();
+        return move();
     }
 
     public @Mandatory Token read(@Mandatory TokenPredicate predicate) {
         validate(predicate);
-        return read();
+        return move();
     }
 
-    public @Mandatory Token next() {
-        if (item != null) {
-            Token token = item.get();
-            item = item.getNextItem();
-            return token;
-        } else {
+    private @Mandatory Token move() {
+        @SuppressWarnings("ConstantConditions")
+        Token token = item.get();
+        item = item.getNextItem();
+        return token;
+    }
+
+    public void validate() {
+        if (item == null) {
             throw new TokenizeException(tokens.getLast().getPosition(), "Missing token.");
         }
     }
 
-    public @Mandatory Token next(@Mandatory Class<? extends Token> type) {
-        validate(type);
-        return next();
-    }
-
-    public @Mandatory Token next(@Mandatory String text) {
-        validate(text);
-        return next();
-    }
-
-    public @Mandatory Token next(@Mandatory TokenPredicate predicate) {
-        validate(predicate);
-        return next();
-    }
-
-    public @Mandatory Token previous() {
-        if (item != null) {
-            Token token = item.get();
-            item = item.getPreviousItem();
-            return token;
-        } else {
-            throw new TokenizeException(tokens.getFirst().getPosition(), "Missing token.");
-        }
-    }
-
-    public @Mandatory Token previous(@Mandatory Class<? extends Token> type) {
-        validate(type);
-        return previous();
-    }
-
-    public @Mandatory Token previous(@Mandatory String text) {
-        validate(text);
-        return previous();
-    }
-
-    public @Mandatory Token previous(@Mandatory TokenPredicate predicate) {
-        validate(predicate);
-        return previous();
-    }
-
     public void validate(@Mandatory Class<? extends Token> type) {
-        Token token = read();
+        validate();
+        @SuppressWarnings("ConstantConditions")
+        Token token = item.get();
         if (!type.isInstance(token)) {
             throw new TokenizeException(
                 token.getPosition(),
@@ -150,7 +114,9 @@ public @Utility class TokenReader {
     }
 
     public void validate(@Mandatory String text) {
-        Token token = read();
+        validate();
+        @SuppressWarnings("ConstantConditions")
+        Token token = item.get();
         if (!token.getText().equals(text)) {
             throw new TokenizeException(
                 token.getPosition(),
@@ -160,17 +126,15 @@ public @Utility class TokenReader {
     }
 
     public void validate(@Mandatory TokenPredicate predicate) {
-        Token token = read();
+        validate();
+        @SuppressWarnings("ConstantConditions")
+        Token token = item.get();
         if (!predicate.match(token)) {
             throw new TokenizeException(
                 token.getPosition(),
                 "Expected token matching predicate '" + predicate + "', but got '" + token.getText() + "'."
             );
         }
-    }
-
-    public void reset() {
-        item = tokens.getFirstItem();
     }
 
     public interface TokenPredicate {

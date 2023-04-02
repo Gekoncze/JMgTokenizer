@@ -42,7 +42,7 @@ public @Service class Tokenizer {
     public @Mandatory List<Token> tokenize(@Mandatory String content, @Mandatory List<TokenParser> parsers) {
         List<Token> tokens = new List<>();
         CharacterReader reader = new CharacterReader(content);
-        while (reader.hasNext()) {
+        while (reader.hasPrevious()) {
             tokens.addLast(parse(reader, parsers));
         }
         return tokens;

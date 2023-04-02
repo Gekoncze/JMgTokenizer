@@ -53,7 +53,7 @@ public @Service class NameTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         while (reader.has()) {
             if (reader.has(this::nameOrNumber)) {
-                builder.getText().append(reader.next());
+                builder.getText().append(reader.read());
             } else {
                 break;
             }
