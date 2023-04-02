@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
+import cz.mg.collections.list.ReadableListItem;
 import cz.mg.tokenizer.entities.Token;
 
 public @Utility class TokenReader {
@@ -18,6 +19,10 @@ public @Utility class TokenReader {
 
     public void reset() {
         item = tokens.getFirstItem();
+    }
+
+    public @Optional ReadableListItem<Token> getItem() {
+        return item;
     }
 
     public boolean has() {
