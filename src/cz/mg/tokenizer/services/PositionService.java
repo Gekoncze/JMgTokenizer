@@ -19,18 +19,30 @@ public @Service class PositionService {
     }
 
     public @Mandatory Position find(@Mandatory String content, int position) {
+        validate(content, position);
         int row = 1;
         int column = 1;
         for (int i = 0; i <= position; i++) {
-            char ch = content.charAt(i);
-            if (ch == '\n') {
-                row++;
-                column = 1;
+            if (i == position) {
+                return new Position(row, column);
             } else {
-                column++;
+                char ch = content.charAt(i);
+                if (ch == '\n') {
+                    row++;
+                    column = 1;
+                } else {
+                    column++;
+                }
             }
         }
-        column--;
-        return new Position(row, column);
+        throw new RuntimeException("Unreachable statement.");
+    }
+
+    private void validate(@Mandatory String content, int position) {
+        if (position < 0 || position >= content.length()) {
+            throw new ArrayIndexOutOfBoundsException(
+                "Position " + position + " is out of bounds of string of length " + content.length() + "."
+            );
+        }
     }
 }

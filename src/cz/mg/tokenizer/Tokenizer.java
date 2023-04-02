@@ -29,7 +29,7 @@ public @Utility class Tokenizer {
         this.parsers = new List<>(parsers);
     }
 
-    public Tokenizer(Iterable<TokenParser> parsers) {
+    public Tokenizer(@Mandatory Iterable<TokenParser> parsers) {
         this.parsers = new List<>(parsers);
     }
 
