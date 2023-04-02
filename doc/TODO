@@ -1,8 +1,6 @@
 add unit tests
-    for character reader
     for all parsers
     for tokenizer
     for position service
-    for token reader
 
 spaces and comments should be removed in code preprocessor or code parser
