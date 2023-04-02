@@ -54,12 +54,39 @@ public @Utility class TokenReader {
         return item != null && item.getPreviousItem() != null && item.getPreviousItem().get().getText().equals(text);
     }
 
+    public boolean has(@Mandatory TokenPredicate predicate) {
+        return item != null && has() && predicate.match(item.get());
+    }
+
+    public boolean hasNext(@Mandatory TokenPredicate predicate) {
+        return item != null && hasNext() && predicate.match(item.getNextItem().get());
+    }
+
+    public boolean hasPrevious(@Mandatory TokenPredicate predicate) {
+        return item != null && hasPrevious() && predicate.match(item.getPreviousItem().get());
+    }
+
     public @Mandatory Token read() {
         if (item != null) {
             return item.get();
         } else {
             throw new NoSuchElementException("Missing token.");
         }
+    }
+
+    public @Mandatory Token read(@Mandatory Class<? extends Token> type) {
+        validate(type);
+        return read();
+    }
+
+    public @Mandatory Token read(@Mandatory String text) {
+        validate(text);
+        return read();
+    }
+
+    public @Mandatory Token read(@Mandatory TokenPredicate predicate) {
+        validate(predicate);
+        return read();
     }
 
     public @Mandatory Token next() {
@@ -79,6 +106,11 @@ public @Utility class TokenReader {
 
     public @Mandatory Token next(@Mandatory String text) {
         validate(text);
+        return next();
+    }
+
+    public @Mandatory Token next(@Mandatory TokenPredicate predicate) {
+        validate(predicate);
         return next();
     }
 
@@ -102,6 +134,11 @@ public @Utility class TokenReader {
         return previous();
     }
 
+    public @Mandatory Token previous(@Mandatory TokenPredicate predicate) {
+        validate(predicate);
+        return previous();
+    }
+
     public void validate(@Mandatory Class<? extends Token> type) {
         Token token = read();
         if (!type.isInstance(token)) {
@@ -120,5 +157,19 @@ public @Utility class TokenReader {
                 "Expected token '" + text + "', but got '" + token.getText() + "'."
             );
         }
+    }
+
+    public void validate(@Mandatory TokenPredicate predicate) {
+        Token token = read();
+        if (!predicate.match(token)) {
+            throw new TokenizeException(
+                token.getPosition(),
+                "Expected token matching predicate '" + predicate + "', but got '" + token.getText() + "'."
+            );
+        }
+    }
+
+    public interface TokenPredicate {
+        boolean match(@Mandatory Token token);
     }
 }

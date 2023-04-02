@@ -40,15 +40,15 @@ public @Utility class CharacterReader {
         return hasPrevious() && content.charAt(position - 1) == ch;
     }
 
-    public boolean has(CharacterPredicate predicate) {
+    public boolean has(@Mandatory CharacterPredicate predicate) {
         return has() && predicate.match(content.charAt(position));
     }
 
-    public boolean hasNext(CharacterPredicate predicate) {
+    public boolean hasNext(@Mandatory CharacterPredicate predicate) {
         return hasNext() && predicate.match(content.charAt(position + 1));
     }
 
-    public boolean hasPrevious(CharacterPredicate predicate) {
+    public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
         return hasPrevious() && predicate.match(content.charAt(position - 1));
     }
 
@@ -58,6 +58,16 @@ public @Utility class CharacterReader {
         } else {
             throw new TokenizeException(position, "Missing character.");
         }
+    }
+
+    public char read(char ch) {
+        validate(ch);
+        return read();
+    }
+
+    public char read(@Mandatory CharacterPredicate predicate) {
+        validate(predicate);
+        return read();
     }
 
     public char next() {
@@ -72,6 +82,11 @@ public @Utility class CharacterReader {
 
     public char next(char ch) {
         validate(ch);
+        return next();
+    }
+
+    public char next(@Mandatory CharacterPredicate predicate) {
+        validate(predicate);
         return next();
     }
 
@@ -90,12 +105,27 @@ public @Utility class CharacterReader {
         return previous();
     }
 
+    public char previous(@Mandatory CharacterPredicate predicate) {
+        validate(predicate);
+        return previous();
+    }
+
     public void validate(char c) {
         char ch = read();
         if (ch != c) {
             throw new TokenizeException(
                 position,
                 "Expected character '" + c + "', but got '" + ch + "'."
+            );
+        }
+    }
+
+    public void validate(@Mandatory CharacterPredicate predicate) {
+        char ch = read();
+        if (!predicate.match(ch)) {
+            throw new TokenizeException(
+                position,
+                "Expected character matching predicate '" + predicate + "', but got '" + ch + "'."
             );
         }
     }
