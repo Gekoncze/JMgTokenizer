@@ -24,7 +24,7 @@ public @Service class CommentTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::slash) && reader.hasPrevious(this::slash)) {
+        if (reader.has(this::slash) && reader.hasNext(this::slash)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;

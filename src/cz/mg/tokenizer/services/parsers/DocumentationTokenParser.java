@@ -25,7 +25,7 @@ public @Service class DocumentationTokenParser implements TokenParser {
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::slash) && reader.hasPrevious(this::star)) {
+        if (reader.has(this::slash) && reader.hasNext(this::star)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -36,7 +36,7 @@ public @Service class DocumentationTokenParser implements TokenParser {
         reader.read();
         reader.read();
         while (reader.has()) {
-            if (reader.has(this::star) && reader.hasPrevious(this::slash)) {
+            if (reader.has(this::star) && reader.hasNext(this::slash)) {
                 reader.read();
                 reader.read();
                 return builder.build(DoubleQuoteToken::new);

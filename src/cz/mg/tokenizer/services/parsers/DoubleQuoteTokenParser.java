@@ -35,7 +35,7 @@ public @Service class DoubleQuoteTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         reader.read();
         while (reader.has()) {
-            if (reader.has(this::doubleQuote) && !reader.hasNext(this::backslash)) {
+            if (reader.has(this::doubleQuote) && !reader.hasPrevious(this::backslash)) {
                 reader.read();
                 return builder.build(DoubleQuoteToken::new);
             } else {

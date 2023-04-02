@@ -24,11 +24,11 @@ public @Utility class CharacterReader {
         return position >= 0 && position < content.length();
     }
 
-    public boolean hasPrevious() {
+    public boolean hasNext() {
         return (position + 1) >= 0 && (position + 1) < content.length();
     }
 
-    public boolean hasNext() {
+    public boolean hasPrevious() {
         return (position - 1) >= 0 && (position - 1) < content.length();
     }
 
@@ -40,32 +40,32 @@ public @Utility class CharacterReader {
         return has() && content.charAt(position) == ch;
     }
 
-    public boolean hasPrevious(char ch) {
-        return hasPrevious() && content.charAt(position + 1) == ch;
+    public boolean hasNext(char ch) {
+        return hasNext() && content.charAt(position + 1) == ch;
     }
 
-    public boolean hasNext(char ch) {
-        return hasNext() && content.charAt(position - 1) == ch;
+    public boolean hasPrevious(char ch) {
+        return hasPrevious() && content.charAt(position - 1) == ch;
     }
 
     public boolean hasAt(char ch, int delta) {
-        return hasNext() && content.charAt(position + delta) == ch;
+        return hasAt(delta) && content.charAt(position + delta) == ch;
     }
 
     public boolean has(@Mandatory CharacterPredicate predicate) {
         return has() && predicate.match(content.charAt(position));
     }
 
-    public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
-        return hasPrevious() && predicate.match(content.charAt(position + 1));
+    public boolean hasNext(@Mandatory CharacterPredicate predicate) {
+        return hasNext() && predicate.match(content.charAt(position + 1));
     }
 
-    public boolean hasNext(@Mandatory CharacterPredicate predicate) {
-        return hasNext() && predicate.match(content.charAt(position - 1));
+    public boolean hasPrevious(@Mandatory CharacterPredicate predicate) {
+        return hasPrevious() && predicate.match(content.charAt(position - 1));
     }
 
     public boolean hasAt(@Mandatory CharacterPredicate predicate, int delta) {
-        return hasNext() && predicate.match(content.charAt(position + delta));
+        return hasAt(delta) && predicate.match(content.charAt(position + delta));
     }
 
     public char read() {
