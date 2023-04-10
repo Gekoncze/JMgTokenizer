@@ -7,7 +7,7 @@ import cz.mg.tokenizer.entities.Position;
 
 public @Test class PositionServiceTest {
     public static void main(String[] args) {
-        System.out.print("Running" + PositionServiceTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + PositionServiceTest.class.getSimpleName() + " ... ");
 
         PositionServiceTest test = new PositionServiceTest();
         test.testFindInEmpty();
