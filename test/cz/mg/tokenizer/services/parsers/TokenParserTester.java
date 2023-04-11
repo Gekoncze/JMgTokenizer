@@ -6,6 +6,7 @@ import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
+import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Utility class TokenParserTester {
     private final @Mandatory TokenParser parser;
@@ -18,11 +19,22 @@ public @Utility class TokenParserTester {
         this.afterCount = afterCount;
     }
 
+    public void testException(@Mandatory String content) {
+        CharacterReader reader = new CharacterReader(content);
+        Assert.assertThatCode(() -> {
+            for (int i = 0; i < content.length(); i++) {
+                parser.parse(reader);
+                reader.read();
+            }
+        }).throwsException(TokenizeException.class);
+    }
+
     public void testParse(@Mandatory String content) {
         CharacterReader reader = new CharacterReader(content);
         for (int i = 0; i < content.length(); i++) {
             Token actualToken = parser.parse(reader);
             Assert.assertNull(actualToken);
+            reader.read();
         }
     }
 

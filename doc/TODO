@@ -1,9 +1,7 @@
 add unit tests
     for parsers
-        double quote
         name
         number
-        single quote
         special
         whitespace
 
