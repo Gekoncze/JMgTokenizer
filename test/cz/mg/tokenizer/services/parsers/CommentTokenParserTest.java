@@ -26,5 +26,11 @@ public @Test class CommentTokenParserTest {
         tester.testParse("(", "//a", "");
         tester.testParse("", "// test", "\nint a = 0;");
         tester.testParse("void", "// test", "\nint a = 0;");
+        tester.testParse("", "// test (", "");
+        tester.testParse("", "// test a", "");
+        tester.testParse("", "// test 1", "");
+        tester.testParse("", "// test */", "");
+        tester.testParse("", "// test \"", "");
+        tester.testParse("", "// test '", "");
     }
 }
