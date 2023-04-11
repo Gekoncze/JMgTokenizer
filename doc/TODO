@@ -1,5 +1,12 @@
 add unit tests
-    for all parsers
+    for parsers
+        double quote
+        name
+        number
+        single quote
+        special
+        whitespace
+
     for tokenizer
 
 spaces and comments should be removed in code preprocessor or code parser
