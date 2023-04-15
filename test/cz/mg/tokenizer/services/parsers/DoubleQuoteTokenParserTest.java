@@ -1,6 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
 
 public @Test class DoubleQuoteTokenParserTest {
     public static void main(String[] args) {
@@ -13,7 +14,9 @@ public @Test class DoubleQuoteTokenParserTest {
     }
 
     private void testParse() {
-        TokenParserTester tester = new TokenParserTester(DoubleQuoteTokenParser.getInstance(), 1, 1);
+        TokenParserTester tester = new TokenParserTester(
+            DoubleQuoteTokenParser.getInstance(), 1, 1, DoubleQuoteToken.class
+        );
         tester.testParse("");
         tester.testException("\"");
         tester.testException("test \"");

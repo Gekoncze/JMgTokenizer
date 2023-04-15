@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.CommentToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
@@ -41,7 +41,7 @@ public @Service class CommentTokenParser implements TokenParser {
                 builder.getText().append(reader.read());
             }
         }
-        return builder.build(DoubleQuoteToken::new);
+        return builder.build(CommentToken::new);
     }
 
     private boolean slash(char ch) {

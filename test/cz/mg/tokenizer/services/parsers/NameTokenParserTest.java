@@ -1,6 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.tokenizer.entities.tokens.NameToken;
 
 public @Test class NameTokenParserTest {
     public static void main(String[] args) {
@@ -13,7 +14,9 @@ public @Test class NameTokenParserTest {
     }
 
     private void testParse() {
-        TokenParserTester tester = new TokenParserTester(NameTokenParser.getInstance(), 0, 0);
+        TokenParserTester tester = new TokenParserTester(
+            NameTokenParser.getInstance(), 0, 0, NameToken.class
+        );
         tester.testParse("");
         tester.testParse("1");
         tester.testParse("3.14");

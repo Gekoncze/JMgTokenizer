@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.DocumentationToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
@@ -39,7 +39,7 @@ public @Service class DocumentationTokenParser implements TokenParser {
             if (reader.has(this::star) && reader.hasNext(this::slash)) {
                 reader.read();
                 reader.read();
-                return builder.build(DoubleQuoteToken::new);
+                return builder.build(DocumentationToken::new);
             } else {
                 builder.getText().append(reader.read());
             }

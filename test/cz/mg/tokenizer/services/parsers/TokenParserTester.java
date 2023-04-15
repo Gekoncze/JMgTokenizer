@@ -12,11 +12,18 @@ public @Utility class TokenParserTester {
     private final @Mandatory TokenParser parser;
     private final int beforeCount;
     private final int afterCount;
+    private final @Mandatory Class<? extends Token> type;
 
-    public TokenParserTester(@Mandatory TokenParser parser, int beforeCount, int afterCount) {
+    public TokenParserTester(
+        @Mandatory TokenParser parser,
+        int beforeCount,
+        int afterCount,
+        @Mandatory Class<? extends Token> type
+    ) {
         this.parser = parser;
         this.beforeCount = beforeCount;
         this.afterCount = afterCount;
+        this.type = type;
     }
 
     public void testException(@Mandatory String content) {
@@ -55,6 +62,9 @@ public @Utility class TokenParserTester {
                     .areEqual();
                 Assert.assertEquals(expectedTokenPosition, actualToken.getPosition());
                 Assert.assertEquals(expectedReaderPosition, reader.getPosition());
+                Assert.assertThat(type, actualToken.getClass())
+                    .withPrintFunction(Class::getSimpleName)
+                    .areEqual();
                 return;
             } else {
                 Assert.assertNull(actualToken);
