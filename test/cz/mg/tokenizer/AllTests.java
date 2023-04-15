@@ -19,5 +19,6 @@ public @Test class AllTests {
         SingleQuoteTokenParserTest.main(args);
         SpecialTokenParserTest.main(args);
         WhitespaceTokenParserTest.main(args);
+        TokenizerTest.main(args);
     }
 }
