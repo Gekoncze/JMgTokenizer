@@ -17,5 +17,6 @@ public @Test class AllTests {
         NameTokenParserTest.main(args);
         NumberTokenParserTest.main(args);
         SingleQuoteTokenParserTest.main(args);
+        SpecialTokenParserTest.main(args);
     }
 }
