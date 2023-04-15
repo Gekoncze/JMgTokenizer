@@ -18,5 +18,6 @@ public @Test class AllTests {
         NumberTokenParserTest.main(args);
         SingleQuoteTokenParserTest.main(args);
         SpecialTokenParserTest.main(args);
+        WhitespaceTokenParserTest.main(args);
     }
 }

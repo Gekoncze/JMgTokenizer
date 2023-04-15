@@ -1,7 +1,4 @@
 add unit tests
-    for parsers
-        whitespace
-
     for tokenizer
 
 spaces and comments should be removed in code preprocessor or code parser
