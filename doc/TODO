@@ -1,7 +1,5 @@
 add unit tests
     for parsers
-        name
-        number
         special
         whitespace
 
