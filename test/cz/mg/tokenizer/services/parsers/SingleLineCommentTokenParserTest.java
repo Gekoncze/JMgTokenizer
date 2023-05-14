@@ -1,13 +1,13 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.CommentToken;
+import cz.mg.tokenizer.entities.tokens.SingleLineCommentToken;
 
-public @Test class CommentTokenParserTest {
+public @Test class SingleLineCommentTokenParserTest {
     public static void main(String[] args) {
-        System.out.print("Running " + CommentTokenParserTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + SingleLineCommentTokenParserTest.class.getSimpleName() + " ... ");
 
-        CommentTokenParserTest test = new CommentTokenParserTest();
+        SingleLineCommentTokenParserTest test = new SingleLineCommentTokenParserTest();
         test.testParse();
 
         System.out.println("OK");
@@ -15,7 +15,7 @@ public @Test class CommentTokenParserTest {
 
     private void testParse() {
         TokenParserTester tester = new TokenParserTester(
-            CommentTokenParser.getInstance(), 2, 0, CommentToken.class
+            SingleLineCommentTokenParser.getInstance(), 2, 0, SingleLineCommentToken.class
         );
         tester.testParse("");
         tester.testParse("int a = 0;");

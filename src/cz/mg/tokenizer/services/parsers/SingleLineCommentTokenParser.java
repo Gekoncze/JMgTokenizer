@@ -4,28 +4,27 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.DocumentationToken;
+import cz.mg.tokenizer.entities.tokens.SingleLineCommentToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
-import cz.mg.tokenizer.utilities.TokenizeException;
 
-public @Service class DocumentationTokenParser implements TokenParser {
-    private static @Optional DocumentationTokenParser instance;
+public @Service class SingleLineCommentTokenParser implements TokenParser {
+    private static @Optional SingleLineCommentTokenParser instance;
 
-    public static @Mandatory DocumentationTokenParser getInstance() {
+    public static @Mandatory SingleLineCommentTokenParser getInstance() {
         if (instance == null) {
-            instance = new DocumentationTokenParser();
+            instance = new SingleLineCommentTokenParser();
         }
         return instance;
     }
 
-    private DocumentationTokenParser() {
+    private SingleLineCommentTokenParser() {
     }
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::slash) && reader.hasNext(this::star)) {
+        if (reader.has(this::slash) && reader.hasNext(this::slash)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -36,22 +35,20 @@ public @Service class DocumentationTokenParser implements TokenParser {
         reader.read();
         reader.read();
         while (reader.has()) {
-            if (reader.has(this::star) && reader.hasNext(this::slash)) {
-                reader.read();
-                reader.read();
-                return builder.build(DocumentationToken::new);
+            if (reader.has(this::newline)) {
+                break;
             } else {
                 builder.getText().append(reader.read());
             }
         }
-        throw new TokenizeException(builder.getPosition(), "Unclosed documentation.");
+        return builder.build(SingleLineCommentToken::new);
     }
 
     private boolean slash(char ch) {
         return ch == '/';
     }
 
-    private boolean star(char ch) {
-        return ch == '*';
+    private boolean newline(char ch) {
+        return ch == '\n';
     }
 }

@@ -4,27 +4,28 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.CommentToken;
+import cz.mg.tokenizer.entities.tokens.MultiLineCommentToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
+import cz.mg.tokenizer.utilities.TokenizeException;
 
-public @Service class CommentTokenParser implements TokenParser {
-    private static @Optional CommentTokenParser instance;
+public @Service class MultiLineCommentTokenParser implements TokenParser {
+    private static @Optional MultiLineCommentTokenParser instance;
 
-    public static @Mandatory CommentTokenParser getInstance() {
+    public static @Mandatory MultiLineCommentTokenParser getInstance() {
         if (instance == null) {
-            instance = new CommentTokenParser();
+            instance = new MultiLineCommentTokenParser();
         }
         return instance;
     }
 
-    private CommentTokenParser() {
+    private MultiLineCommentTokenParser() {
     }
 
     @Override
     public @Optional Token parse(@Mandatory CharacterReader reader) {
-        if (reader.has(this::slash) && reader.hasNext(this::slash)) {
+        if (reader.has(this::slash) && reader.hasNext(this::star)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else {
             return null;
@@ -35,20 +36,22 @@ public @Service class CommentTokenParser implements TokenParser {
         reader.read();
         reader.read();
         while (reader.has()) {
-            if (reader.has(this::newline)) {
-                break;
+            if (reader.has(this::star) && reader.hasNext(this::slash)) {
+                reader.read();
+                reader.read();
+                return builder.build(MultiLineCommentToken::new);
             } else {
                 builder.getText().append(reader.read());
             }
         }
-        return builder.build(CommentToken::new);
+        throw new TokenizeException(builder.getPosition(), "Unclosed multiline token.");
     }
 
     private boolean slash(char ch) {
         return ch == '/';
     }
 
-    private boolean newline(char ch) {
-        return ch == '\n';
+    private boolean star(char ch) {
+        return ch == '*';
     }
 }

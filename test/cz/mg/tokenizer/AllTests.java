@@ -11,8 +11,8 @@ public @Test class AllTests {
         CharacterReaderTest.main(args);
         TokenReaderTest.main(args);
         PositionServiceTest.main(args);
-        CommentTokenParserTest.main(args);
-        DocumentationTokenParserTest.main(args);
+        SingleLineCommentTokenParserTest.main(args);
+        MultiLineCommentTokenParserTest.main(args);
         DoubleQuoteTokenParserTest.main(args);
         NameTokenParserTest.main(args);
         NumberTokenParserTest.main(args);

@@ -31,7 +31,7 @@ public @Test class TokenizerTest {
             new NumberToken("0", 8),
             new SpecialToken(";", 9),
             new WhitespaceToken(" ", 10),
-            new CommentToken(" test", 11)
+            new SingleLineCommentToken(" test", 11)
         );
 
         testTokenize(
@@ -43,10 +43,10 @@ public @Test class TokenizerTest {
             new SpecialToken("=", 10),
             new DoubleQuoteToken("a 1 + '", 11),
             new SpecialToken(";", 20),
-            new CommentToken("comment of the day", 21),
+            new SingleLineCommentToken("comment of the day", 21),
             new WhitespaceToken("\n", 41),
             new NameToken("aha", 42),
-            new DocumentationToken("a 1 + '", 45),
+            new MultiLineCommentToken("a 1 + '", 45),
             new NameToken("hah", 56)
         );
 

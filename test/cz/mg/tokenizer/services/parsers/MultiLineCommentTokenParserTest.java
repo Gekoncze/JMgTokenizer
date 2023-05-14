@@ -1,13 +1,13 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.DocumentationToken;
+import cz.mg.tokenizer.entities.tokens.MultiLineCommentToken;
 
-public @Test class DocumentationTokenParserTest {
+public @Test class MultiLineCommentTokenParserTest {
     public static void main(String[] args) {
-        System.out.print("Running " + DocumentationTokenParserTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + MultiLineCommentTokenParserTest.class.getSimpleName() + " ... ");
 
-        DocumentationTokenParserTest test = new DocumentationTokenParserTest();
+        MultiLineCommentTokenParserTest test = new MultiLineCommentTokenParserTest();
         test.testParse();
 
         System.out.println("OK");
@@ -15,7 +15,7 @@ public @Test class DocumentationTokenParserTest {
 
     private void testParse() {
         TokenParserTester tester = new TokenParserTester(
-            DocumentationTokenParser.getInstance(), 2, 2, DocumentationToken.class
+            MultiLineCommentTokenParser.getInstance(), 2, 2, MultiLineCommentToken.class
         );
         tester.testParse("");
         tester.testException("/*");

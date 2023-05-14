@@ -14,8 +14,8 @@ public @Utility class Tokenizer {
 
     public Tokenizer() {
         this(
-            CommentTokenParser.getInstance(),
-            DocumentationTokenParser.getInstance(),
+            SingleLineCommentTokenParser.getInstance(),
+            MultiLineCommentTokenParser.getInstance(),
             SingleQuoteTokenParser.getInstance(),
             DoubleQuoteTokenParser.getInstance(),
             WhitespaceTokenParser.getInstance(),
