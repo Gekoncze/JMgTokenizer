@@ -8,17 +8,25 @@ import cz.mg.tokenizer.utilities.TokenReaderTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
-        CharacterReaderTest.main(args);
-        TokenReaderTest.main(args);
-        PositionServiceTest.main(args);
-        SingleLineCommentTokenParserTest.main(args);
-        MultiLineCommentTokenParserTest.main(args);
+        // cz.mg.tokenizer.services.parsers
+        BracketTokenParserTest.main(args);
         DoubleQuoteTokenParserTest.main(args);
+        MultiLineCommentTokenParserTest.main(args);
         NameTokenParserTest.main(args);
         NumberTokenParserTest.main(args);
+        SingleLineCommentTokenParserTest.main(args);
         SingleQuoteTokenParserTest.main(args);
         SpecialTokenParserTest.main(args);
         WhitespaceTokenParserTest.main(args);
+
+        // cz.mg.tokenizer.services
+        PositionServiceTest.main(args);
+
+        // cz.mg.tokenizer.utilities
+        CharacterReaderTest.main(args);
+        TokenReaderTest.main(args);
+
+        // cz.mg.tokenizer
         TokenizerTest.main(args);
     }
 }

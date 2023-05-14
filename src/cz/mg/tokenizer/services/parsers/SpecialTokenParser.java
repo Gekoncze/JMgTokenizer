@@ -38,12 +38,6 @@ public @Service class SpecialTokenParser implements TokenParser {
         SPECIAL['.'] = true;
         SPECIAL[','] = true;
         SPECIAL[';'] = true;
-        SPECIAL['('] = true;
-        SPECIAL[')'] = true;
-        SPECIAL['['] = true;
-        SPECIAL[']'] = true;
-        SPECIAL['{'] = true;
-        SPECIAL['}'] = true;
         SPECIAL['?'] = true;
         SPECIAL[':'] = true;
         SPECIAL['@'] = true;

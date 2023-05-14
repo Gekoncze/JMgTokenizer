@@ -21,6 +21,7 @@ public @Utility class Tokenizer {
             WhitespaceTokenParser.getInstance(),
             NumberTokenParser.getInstance(),
             NameTokenParser.getInstance(),
+            BracketTokenParser.getInstance(),
             SpecialTokenParser.getInstance()
         );
     }

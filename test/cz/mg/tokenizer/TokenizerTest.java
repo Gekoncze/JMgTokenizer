@@ -54,13 +54,13 @@ public @Test class TokenizerTest {
             "1*(3.14/[0x32])-0.1",
             new NumberToken("1", 0),
             new SpecialToken("*", 1),
-            new SpecialToken("(", 2),
+            new BracketToken("(", 2),
             new NumberToken("3.14", 3),
             new SpecialToken("/", 7),
-            new SpecialToken("[", 8),
+            new BracketToken("[", 8),
             new NumberToken("0x32", 9),
-            new SpecialToken("]", 13),
-            new SpecialToken(")", 14),
+            new BracketToken("]", 13),
+            new BracketToken(")", 14),
             new SpecialToken("-", 15),
             new NumberToken("0.1", 16)
         );
