@@ -10,7 +10,7 @@ import cz.mg.tokenizer.components.CharacterReader;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Component class Tokenizer {
-    private final List<TokenParser> parsers;
+    private final @Mandatory List<TokenParser> parsers;
 
     public Tokenizer() {
         this(
