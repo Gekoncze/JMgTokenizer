@@ -22,7 +22,7 @@ public @Test class AllTests {
         // cz.mg.tokenizer.services
         PositionServiceTest.main(args);
 
-        // cz.mg.tokenizer.utilities
+        // cz.mg.tokenizer.components
         CharacterReaderTest.main(args);
         TokenReaderTest.main(args);
 
