@@ -1,7 +1,8 @@
-package cz.mg.tokenizer.utilities;
+package cz.mg.tokenizer.components;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.test.Assert;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Test class CharacterReaderTest {
     public static void main(String[] args) {

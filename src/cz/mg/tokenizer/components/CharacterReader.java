@@ -1,9 +1,10 @@
-package cz.mg.tokenizer.utilities;
+package cz.mg.tokenizer.components;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
-public @Utility class CharacterReader {
+public @Component class CharacterReader {
     private final @Mandatory String content;
     private int position;
 

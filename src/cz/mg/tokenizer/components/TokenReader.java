@@ -1,14 +1,15 @@
-package cz.mg.tokenizer.utilities;
+package cz.mg.tokenizer.components;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.collections.list.ReadableListItem;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
-public @Utility class TokenReader {
+public @Component class TokenReader {
     private final @Mandatory List<Token> tokens;
     private @Optional ListItem<Token> item;
 

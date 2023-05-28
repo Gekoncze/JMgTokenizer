@@ -1,15 +1,15 @@
 package cz.mg.tokenizer;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.services.parsers.*;
-import cz.mg.tokenizer.utilities.CharacterReader;
-import cz.mg.tokenizer.utilities.TokenizeException;
+import cz.mg.tokenizer.components.CharacterReader;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
-public @Utility class Tokenizer {
+public @Component class Tokenizer {
     private final List<TokenParser> parsers;
 
     public Tokenizer() {

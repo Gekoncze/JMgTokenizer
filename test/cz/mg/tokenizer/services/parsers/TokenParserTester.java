@@ -1,14 +1,14 @@
 package cz.mg.tokenizer.services.parsers;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.services.TokenParser;
-import cz.mg.tokenizer.utilities.CharacterReader;
-import cz.mg.tokenizer.utilities.TokenizeException;
+import cz.mg.tokenizer.components.CharacterReader;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
-public @Utility class TokenParserTester {
+public @Component class TokenParserTester {
     private final @Mandatory TokenParser parser;
     private final int beforeCount;
     private final int afterCount;

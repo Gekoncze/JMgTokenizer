@@ -1,8 +1,8 @@
-package cz.mg.tokenizer.utilities;
+package cz.mg.tokenizer.exceptions;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Error;
 
-public @Utility class TokenizeException extends CodeException {
+public @Error class TokenizeException extends CodeException {
     public TokenizeException(int position, String message) {
         super(position, message);
     }

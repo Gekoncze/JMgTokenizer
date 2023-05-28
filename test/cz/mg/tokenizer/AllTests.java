@@ -3,8 +3,8 @@ package cz.mg.tokenizer;
 import cz.mg.annotations.classes.Test;
 import cz.mg.tokenizer.services.PositionServiceTest;
 import cz.mg.tokenizer.services.parsers.*;
-import cz.mg.tokenizer.utilities.CharacterReaderTest;
-import cz.mg.tokenizer.utilities.TokenReaderTest;
+import cz.mg.tokenizer.components.CharacterReaderTest;
+import cz.mg.tokenizer.components.TokenReaderTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {

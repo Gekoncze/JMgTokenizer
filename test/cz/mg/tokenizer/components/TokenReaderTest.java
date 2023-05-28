@@ -1,4 +1,4 @@
-package cz.mg.tokenizer.utilities;
+package cz.mg.tokenizer.components;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
@@ -6,6 +6,7 @@ import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Test class TokenReaderTest {
     public static void main(String[] args) {

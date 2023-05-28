@@ -6,8 +6,8 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.services.TokenParser;
-import cz.mg.tokenizer.utilities.CharacterReader;
-import cz.mg.tokenizer.utilities.TokenBuilder;
+import cz.mg.tokenizer.components.CharacterReader;
+import cz.mg.tokenizer.components.TokenBuilder;
 
 public @Service class SpecialTokenParser implements TokenParser {
     private static volatile @Service SpecialTokenParser instance;

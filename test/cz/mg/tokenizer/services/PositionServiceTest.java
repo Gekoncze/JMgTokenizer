@@ -3,7 +3,7 @@ package cz.mg.tokenizer.services;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.test.Assert;
-import cz.mg.test.UnsafeRunnable;
+import cz.mg.test.components.UnsafeRunnable;
 import cz.mg.tokenizer.entities.Position;
 
 public @Test class PositionServiceTest {
