@@ -2,15 +2,18 @@ package cz.mg.tokenizer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Position;
 
 public @Service class PositionService {
-    private static @Optional PositionService instance;
+    private static volatile @Service PositionService instance;
 
-    public static @Mandatory PositionService getInstance() {
+    public static @Service PositionService getInstance() {
         if (instance == null) {
-            instance = new PositionService();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new PositionService();
+                }
+            }
         }
         return instance;
     }

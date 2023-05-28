@@ -11,11 +11,15 @@ import cz.mg.tokenizer.utilities.TokenBuilder;
 import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Service class SingleQuoteTokenParser implements TokenParser {
-    private static @Optional SingleQuoteTokenParser instance;
+    private static volatile @Service SingleQuoteTokenParser instance;
 
-    public static @Mandatory SingleQuoteTokenParser getInstance() {
+    public static @Service SingleQuoteTokenParser getInstance() {
         if (instance == null) {
-            instance = new SingleQuoteTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new SingleQuoteTokenParser();
+                }
+            }
         }
         return instance;
     }

@@ -11,11 +11,15 @@ import cz.mg.tokenizer.utilities.TokenBuilder;
 import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Service class DoubleQuoteTokenParser implements TokenParser {
-    private static @Optional DoubleQuoteTokenParser instance;
+    private static volatile @Service DoubleQuoteTokenParser instance;
 
-    public static @Mandatory DoubleQuoteTokenParser getInstance() {
+    public static @Service DoubleQuoteTokenParser getInstance() {
         if (instance == null) {
-            instance = new DoubleQuoteTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new DoubleQuoteTokenParser();
+                }
+            }
         }
         return instance;
     }

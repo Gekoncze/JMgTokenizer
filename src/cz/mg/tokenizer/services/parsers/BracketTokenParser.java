@@ -10,11 +10,15 @@ import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
 
 public @Service class BracketTokenParser implements TokenParser {
-    private static @Optional BracketTokenParser instance;
+    private static volatile @Service BracketTokenParser instance;
 
-    public static @Mandatory BracketTokenParser getInstance() {
+    public static @Service BracketTokenParser getInstance() {
         if (instance == null) {
-            instance = new BracketTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new BracketTokenParser();
+                }
+            }
         }
         return instance;
     }

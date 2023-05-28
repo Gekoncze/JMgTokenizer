@@ -10,11 +10,15 @@ import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
 
 public @Service class NameTokenParser implements TokenParser {
-    private static @Optional NameTokenParser instance;
+    private static volatile @Service NameTokenParser instance;
 
-    public static @Mandatory NameTokenParser getInstance() {
+    public static @Service NameTokenParser getInstance() {
         if (instance == null) {
-            instance = new NameTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new NameTokenParser();
+                }
+            }
         }
         return instance;
     }

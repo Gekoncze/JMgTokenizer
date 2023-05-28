@@ -11,11 +11,15 @@ import cz.mg.tokenizer.utilities.TokenBuilder;
 import cz.mg.tokenizer.utilities.TokenizeException;
 
 public @Service class MultiLineCommentTokenParser implements TokenParser {
-    private static @Optional MultiLineCommentTokenParser instance;
+    private static volatile @Service MultiLineCommentTokenParser instance;
 
-    public static @Mandatory MultiLineCommentTokenParser getInstance() {
+    public static @Service MultiLineCommentTokenParser getInstance() {
         if (instance == null) {
-            instance = new MultiLineCommentTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new MultiLineCommentTokenParser();
+                }
+            }
         }
         return instance;
     }

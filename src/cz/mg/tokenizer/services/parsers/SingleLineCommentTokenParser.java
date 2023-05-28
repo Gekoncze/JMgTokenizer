@@ -10,11 +10,15 @@ import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
 
 public @Service class SingleLineCommentTokenParser implements TokenParser {
-    private static @Optional SingleLineCommentTokenParser instance;
+    private static volatile @Service SingleLineCommentTokenParser instance;
 
-    public static @Mandatory SingleLineCommentTokenParser getInstance() {
+    public static @Service SingleLineCommentTokenParser getInstance() {
         if (instance == null) {
-            instance = new SingleLineCommentTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new SingleLineCommentTokenParser();
+                }
+            }
         }
         return instance;
     }

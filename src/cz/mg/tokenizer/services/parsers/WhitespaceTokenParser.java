@@ -10,11 +10,15 @@ import cz.mg.tokenizer.utilities.CharacterReader;
 import cz.mg.tokenizer.utilities.TokenBuilder;
 
 public @Service class WhitespaceTokenParser implements TokenParser {
-    private static @Optional WhitespaceTokenParser instance;
+    private static volatile @Service WhitespaceTokenParser instance;
 
-    public static @Mandatory WhitespaceTokenParser getInstance() {
+    public static @Service WhitespaceTokenParser getInstance() {
         if (instance == null) {
-            instance = new WhitespaceTokenParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new WhitespaceTokenParser();
+                }
+            }
         }
         return instance;
     }
