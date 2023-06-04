@@ -21,15 +21,17 @@ public @Test class SpecialTokenParserTest {
         tester.testParse("1");
         tester.testParse("foo");
         tester.testParse("_");
-        tester.testParse("", "+", "");
-        tester.testParse("", "-", "");
-        tester.testParse("", "/", "");
-        tester.testParse("", "*", "");
-        tester.testParse("3", "+", "1");
-        tester.testParse("a", "+", "2");
-        tester.testParse("B", "+", "3");
-        tester.testParse("1", "+", "A");
-        tester.testParse("2", "+", "b");
-        tester.testParse(" ", "+", " ");
+        tester.testParse("*");
+        tester.testParse(",");
+        tester.testParse("(");
+        tester.testParse("", "@", "");
+        tester.testParse("", "$", "");
+        tester.testParse("", "#", "");
+        tester.testParse("3", "@", "1");
+        tester.testParse("a", "@", "2");
+        tester.testParse("B", "@", "3");
+        tester.testParse("1", "@", "A");
+        tester.testParse("2", "@", "b");
+        tester.testParse(" ", "@", " ");
     }
 }

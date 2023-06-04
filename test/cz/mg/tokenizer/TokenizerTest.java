@@ -21,28 +21,28 @@ public @Test class TokenizerTest {
 
     private void testTokenize() {
         testTokenize(
-            "int a = 0; // test",
+            "int a += 0; // test",
             new NameToken("int", 0),
             new WhitespaceToken(" ", 3),
             new NameToken("a", 4),
             new WhitespaceToken(" ", 5),
-            new SpecialToken("=", 6),
-            new WhitespaceToken(" ", 7),
-            new NumberToken("0", 8),
-            new SpecialToken(";", 9),
-            new WhitespaceToken(" ", 10),
-            new SingleLineCommentToken(" test", 11)
+            new OperatorToken("+=", 6),
+            new WhitespaceToken(" ", 8),
+            new NumberToken("0", 9),
+            new SeparatorToken(";", 10),
+            new WhitespaceToken(" ", 11),
+            new SingleLineCommentToken(" test", 12)
         );
 
         testTokenize(
             "char* text=\"a 1 + '\";//comment of the day\naha/*a 1 + '*/hah",
             new NameToken("char", 0),
-            new SpecialToken("*", 4),
+            new OperatorToken("*", 4),
             new WhitespaceToken(" ", 5),
             new NameToken("text", 6),
-            new SpecialToken("=", 10),
+            new OperatorToken("=", 10),
             new DoubleQuoteToken("a 1 + '", 11),
-            new SpecialToken(";", 20),
+            new SeparatorToken(";", 20),
             new SingleLineCommentToken("comment of the day", 21),
             new WhitespaceToken("\n", 41),
             new NameToken("aha", 42),
@@ -53,15 +53,15 @@ public @Test class TokenizerTest {
         testTokenize(
             "1*(3.14/[0x32])-0.1",
             new NumberToken("1", 0),
-            new SpecialToken("*", 1),
+            new OperatorToken("*", 1),
             new BracketToken("(", 2),
             new NumberToken("3.14", 3),
-            new SpecialToken("/", 7),
+            new OperatorToken("/", 7),
             new BracketToken("[", 8),
             new NumberToken("0x32", 9),
             new BracketToken("]", 13),
             new BracketToken(")", 14),
-            new SpecialToken("-", 15),
+            new OperatorToken("-", 15),
             new NumberToken("0.1", 16)
         );
     }

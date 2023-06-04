@@ -14,6 +14,8 @@ public @Test class AllTests {
         MultiLineCommentTokenParserTest.main(args);
         NameTokenParserTest.main(args);
         NumberTokenParserTest.main(args);
+        OperatorTokenParserTest.main(args);
+        SeparatorTokenParserTest.main(args);
         SingleLineCommentTokenParserTest.main(args);
         SingleQuoteTokenParserTest.main(args);
         SpecialTokenParserTest.main(args);

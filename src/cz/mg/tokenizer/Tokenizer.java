@@ -3,11 +3,11 @@ package cz.mg.tokenizer;
 import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
+import cz.mg.tokenizer.components.CharacterReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.exceptions.TokenizeException;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.services.parsers.*;
-import cz.mg.tokenizer.components.CharacterReader;
-import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Component class Tokenizer {
     private final @Mandatory List<TokenParser> parsers;
@@ -22,6 +22,8 @@ public @Component class Tokenizer {
             NumberTokenParser.getInstance(),
             NameTokenParser.getInstance(),
             BracketTokenParser.getInstance(),
+            OperatorTokenParser.getInstance(),
+            SeparatorTokenParser.getInstance(),
             SpecialTokenParser.getInstance()
         );
     }
