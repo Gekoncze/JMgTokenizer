@@ -21,7 +21,7 @@ public @Test class TokenReaderTest {
     }
 
     private void testEmpty() {
-        TokenReader reader = new TokenReader(new List<>());
+        TokenReader reader = new TokenReader(new List<>(), TokenizeException::new);
 
         Assert.assertNull(reader.getItem());
 
@@ -73,7 +73,7 @@ public @Test class TokenReaderTest {
     private void testSingle() {
         Token token = new NameToken("a", 7);
         List<Token> list = new List<>(token);
-        TokenReader reader = new TokenReader(list);
+        TokenReader reader = new TokenReader(list, TokenizeException::new);
 
         Assert.assertNotNull(reader.getItem());
         Assert.assertEquals(reader.getItem(), list.getFirstItem());
@@ -162,7 +162,7 @@ public @Test class TokenReaderTest {
         Token numberToken = new NumberToken("1", 1);
         Token emptyToken = new Token("", 333);
         List<Token> list = new List<>(nameToken, numberToken, emptyToken);
-        TokenReader reader = new TokenReader(list);
+        TokenReader reader = new TokenReader(list, TokenizeException::new);
 
         Assert.assertEquals(list.getFirstItem(), reader.getItem());
         Assert.assertEquals(false, reader.hasPrevious());

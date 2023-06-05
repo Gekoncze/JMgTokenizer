@@ -7,14 +7,16 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.collections.list.ReadableListItem;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.exceptions.TokenizeException;
+import cz.mg.tokenizer.exceptions.CodeException;
 
 public @Component class TokenReader {
     private final @Mandatory List<Token> tokens;
+    private final @Mandatory ExceptionFactory exceptionFactory;
     private @Optional ListItem<Token> item;
 
-    public TokenReader(@Mandatory List<Token> tokens) {
+    public TokenReader(@Mandatory List<Token> tokens, @Mandatory ExceptionFactory exceptionFactory) {
         this.tokens = tokens;
+        this.exceptionFactory = exceptionFactory;
         this.item = tokens.getFirstItem();
     }
 
@@ -104,9 +106,9 @@ public @Component class TokenReader {
     public void validate() {
         if (item == null) {
             if (tokens.isEmpty()) {
-                throw new TokenizeException(-1, "No tokens.");
+                throw exceptionFactory.create(-1, "No tokens.");
             } else {
-                throw new TokenizeException(tokens.getLast().getPosition(), "Missing token.");
+                throw exceptionFactory.create(tokens.getLast().getPosition(), "Missing token.");
             }
         }
     }
@@ -116,7 +118,7 @@ public @Component class TokenReader {
         @SuppressWarnings("ConstantConditions")
         Token token = item.get();
         if (!type.isInstance(token)) {
-            throw new TokenizeException(
+            throw exceptionFactory.create(
                 token.getPosition(),
                 "Expected token type " + type.getSimpleName() + ", but got " + token.getClass().getSimpleName() + "."
             );
@@ -128,7 +130,7 @@ public @Component class TokenReader {
         @SuppressWarnings("ConstantConditions")
         Token token = item.get();
         if (!token.getText().equals(text)) {
-            throw new TokenizeException(
+            throw exceptionFactory.create(
                 token.getPosition(),
                 "Expected token '" + text + "', but got '" + token.getText() + "'."
             );
@@ -140,7 +142,7 @@ public @Component class TokenReader {
         @SuppressWarnings("ConstantConditions")
         Token token = item.get();
         if (!predicate.match(token)) {
-            throw new TokenizeException(
+            throw exceptionFactory.create(
                 token.getPosition(),
                 "Expected token matching predicate '" + predicate + "', but got '" + token.getText() + "'."
             );
@@ -149,5 +151,9 @@ public @Component class TokenReader {
 
     public interface TokenPredicate {
         boolean match(@Mandatory Token token);
+    }
+
+    public interface ExceptionFactory {
+        @Mandatory CodeException create(int position, @Mandatory String message);
     }
 }
