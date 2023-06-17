@@ -33,47 +33,84 @@ public @Component class TokenReader {
     }
 
     public boolean hasNext() {
-        return item != null && item.getNextItem() != null;
+        return item != null
+            && item.getNextItem() != null;
     }
 
     public boolean hasPrevious() {
-        return item != null && item.getPreviousItem() != null;
+        return item != null
+            && item.getPreviousItem() != null;
     }
 
     public boolean has(@Mandatory Class<? extends Token> type) {
-        return item != null && type.isInstance(item.get());
+        return item != null
+            && type.isInstance(item.get());
     }
 
     public boolean hasNext(@Mandatory Class<? extends Token> type) {
-        return item != null && item.getNextItem() != null && type.isInstance(item.getNextItem().get());
+        return item != null
+            && item.getNextItem() != null
+            && type.isInstance(item.getNextItem().get());
     }
 
     public boolean hasPrevious(@Mandatory Class<? extends Token> type) {
-        return item != null && item.getPreviousItem() != null && type.isInstance(item.getPreviousItem().get());
+        return item != null
+            && item.getPreviousItem() != null
+            && type.isInstance(item.getPreviousItem().get());
     }
 
     public boolean has(@Mandatory String text) {
-        return item != null && item.get().getText().equals(text);
+        return item != null
+            && item.get().getText().equals(text);
     }
 
     public boolean hasNext(@Mandatory String text) {
-        return item != null && item.getNextItem() != null && item.getNextItem().get().getText().equals(text);
+        return item != null
+            && item.getNextItem() != null
+            && item.getNextItem().get().getText().equals(text);
     }
 
     public boolean hasPrevious(@Mandatory String text) {
-        return item != null && item.getPreviousItem() != null && item.getPreviousItem().get().getText().equals(text);
+        return item != null
+            && item.getPreviousItem() != null
+            && item.getPreviousItem().get().getText().equals(text);
     }
 
     public boolean has(@Mandatory TokenPredicate predicate) {
-        return item != null && has() && predicate.match(item.get());
+        return item != null
+            && predicate.match(item.get());
     }
 
     public boolean hasNext(@Mandatory TokenPredicate predicate) {
-        return item != null && hasNext() && predicate.match(item.getNextItem().get());
+        return item != null
+            && item.getNextItem() != null
+            && predicate.match(item.getNextItem().get());
     }
 
     public boolean hasPrevious(@Mandatory TokenPredicate predicate) {
-        return item != null && hasPrevious() && predicate.match(item.getPreviousItem().get());
+        return item != null
+            && item.getPreviousItem() != null
+            && predicate.match(item.getPreviousItem().get());
+    }
+
+    public boolean has(@Mandatory String text, @Mandatory Class<? extends Token> type) {
+        return item != null
+            && type.isInstance(item.get())
+            && item.get().getText().equals(text);
+    }
+
+    public boolean hasNext(@Mandatory String text, @Mandatory Class<? extends Token> type) {
+        return item != null
+            && item.getNextItem() != null
+            && type.isInstance(item.getNextItem().get())
+            && item.getNextItem().get().getText().equals(text);
+    }
+
+    public boolean hasPrevious(@Mandatory String text, @Mandatory Class<? extends Token> type) {
+        return item != null
+            && item.getPreviousItem() != null
+            && type.isInstance(item.getPreviousItem().get())
+            && item.getPreviousItem().get().getText().equals(text);
     }
 
     public @Mandatory Token read() {
@@ -93,6 +130,12 @@ public @Component class TokenReader {
 
     public @Mandatory Token read(@Mandatory TokenPredicate predicate) {
         validate(predicate);
+        return move();
+    }
+
+    public @Mandatory Token read(@Mandatory String text, @Mandatory Class<? extends Token> type) {
+        validate(text);
+        validate(type);
         return move();
     }
 
@@ -120,7 +163,8 @@ public @Component class TokenReader {
         if (!type.isInstance(token)) {
             throw exceptionFactory.create(
                 token.getPosition(),
-                "Expected token type " + type.getSimpleName() + ", but got " + token.getClass().getSimpleName() + "."
+                "Expected token of type " + type.getSimpleName() + ", "
+                    + "but got " + token.getClass().getSimpleName() + "."
             );
         }
     }
@@ -132,7 +176,8 @@ public @Component class TokenReader {
         if (!token.getText().equals(text)) {
             throw exceptionFactory.create(
                 token.getPosition(),
-                "Expected token '" + text + "', but got '" + token.getText() + "'."
+                "Expected token '" + text + "', "
+                    + "but got '" + token.getText() + "'."
             );
         }
     }
@@ -144,7 +189,8 @@ public @Component class TokenReader {
         if (!predicate.match(token)) {
             throw exceptionFactory.create(
                 token.getPosition(),
-                "Expected token matching predicate '" + predicate + "', but got '" + token.getText() + "'."
+                "Expected token matching predicate '" + predicate + "', "
+                    + "but got '" + token.getText() + "'."
             );
         }
     }

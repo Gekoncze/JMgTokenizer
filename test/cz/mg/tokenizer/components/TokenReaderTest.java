@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.CommentToken;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.exceptions.TokenizeException;
@@ -33,6 +34,7 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.has(NameToken.class));
         Assert.assertEquals(false, reader.has(t -> true));
         Assert.assertEquals(false, reader.has(t -> false));
+        Assert.assertEquals(false, reader.has("x", NameToken.class));
 
         Assert.assertNull(reader.getItem());
 
@@ -44,6 +46,7 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.hasNext(NameToken.class));
         Assert.assertEquals(false, reader.hasNext(t -> true));
         Assert.assertEquals(false, reader.hasNext(t -> false));
+        Assert.assertEquals(false, reader.hasNext("x", NameToken.class));
 
         Assert.assertNull(reader.getItem());
 
@@ -55,6 +58,7 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.hasPrevious(NameToken.class));
         Assert.assertEquals(false, reader.hasPrevious(t -> true));
         Assert.assertEquals(false, reader.hasPrevious(t -> false));
+        Assert.assertEquals(false, reader.hasPrevious("x", NameToken.class));
 
         Assert.assertNull(reader.getItem());
 
@@ -66,6 +70,7 @@ public @Test class TokenReaderTest {
         Assert.assertThatCode(() -> reader.read(NameToken.class)).throwsException(TokenizeException.class);
         Assert.assertThatCode(() -> reader.read(t -> true)).throwsException(TokenizeException.class);
         Assert.assertThatCode(() -> reader.read(t -> false)).throwsException(TokenizeException.class);
+        Assert.assertThatCode(() -> reader.read("x", NameToken.class)).throwsException(TokenizeException.class);
 
         Assert.assertNull(reader.getItem());
     }
@@ -88,6 +93,9 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(true, reader.has(Token.class));
         Assert.assertEquals(true, reader.has(t -> true));
         Assert.assertEquals(false, reader.has(t -> false));
+        Assert.assertEquals(true, reader.has("a", NameToken.class));
+        Assert.assertEquals(false, reader.has("b", NameToken.class));
+        Assert.assertEquals(false, reader.has("a", CommentToken.class));
 
         Assert.assertEquals(reader.getItem(), list.getFirstItem());
 
@@ -100,6 +108,7 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.hasNext(Token.class));
         Assert.assertEquals(false, reader.hasNext(t -> true));
         Assert.assertEquals(false, reader.hasNext(t -> false));
+        Assert.assertEquals(false, reader.hasNext("a", NameToken.class));
 
         Assert.assertEquals(reader.getItem(), list.getFirstItem());
 
@@ -112,6 +121,7 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.hasPrevious(Token.class));
         Assert.assertEquals(false, reader.hasPrevious(t -> true));
         Assert.assertEquals(false, reader.hasPrevious(t -> false));
+        Assert.assertEquals(false, reader.hasPrevious("a", NameToken.class));
 
         Assert.assertEquals(reader.getItem(), list.getFirstItem());
 
@@ -149,10 +159,17 @@ public @Test class TokenReaderTest {
 
         Assert.assertEquals(list.getFirstItem(), reader.getItem());
 
+        Assert.assertSame(token, reader.read("a", NameToken.class));
+        Assert.assertNull(reader.getItem());
+        reader.reset();
+
+        Assert.assertEquals(list.getFirstItem(), reader.getItem());
+
         Assert.assertThatCode(() -> reader.read("")).throwsException(TokenizeException.class);
         Assert.assertThatCode(() -> reader.read("x")).throwsException(TokenizeException.class);
         Assert.assertThatCode(() -> reader.read(NumberToken.class)).throwsException(TokenizeException.class);
         Assert.assertThatCode(() -> reader.read(t -> false)).throwsException(TokenizeException.class);
+        Assert.assertThatCode(() -> reader.read("x", NumberToken.class)).throwsException(TokenizeException.class);
 
         Assert.assertEquals(list.getFirstItem(), reader.getItem());
     }
@@ -183,6 +200,9 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(true, reader.hasNext(NumberToken.class));
         Assert.assertEquals(true, reader.hasNext(t -> t.getText().equals("1")));
         Assert.assertEquals(false, reader.hasNext(t -> t.getText().equals("2")));
+        Assert.assertEquals(true, reader.hasNext("1", NumberToken.class));
+        Assert.assertEquals(false, reader.hasNext("0", NumberToken.class));
+        Assert.assertEquals(false, reader.hasNext("1", CommentToken.class));
 
         Assert.assertThatCode(() -> reader.read("\n")).throwsException(TokenizeException.class);
         Assert.assertEquals(nameToken, reader.read());
@@ -195,6 +215,9 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(false, reader.hasPrevious(NumberToken.class));
         Assert.assertEquals(true, reader.hasPrevious(t -> true));
         Assert.assertEquals(false, reader.hasPrevious(t -> false));
+        Assert.assertEquals(true, reader.hasPrevious("a", NameToken.class));
+        Assert.assertEquals(false, reader.hasPrevious("b", NameToken.class));
+        Assert.assertEquals(false, reader.hasPrevious("a", CommentToken.class));
         Assert.assertEquals(true, reader.has());
         Assert.assertEquals(true, reader.has("1"));
         Assert.assertEquals(false, reader.has("2"));
@@ -282,6 +305,12 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(nameToken, reader.read(t -> true));
         Assert.assertEquals(numberToken, reader.read(t -> true));
         Assert.assertEquals(emptyToken, reader.read(t -> true));
+
+        reader.reset();
+
+        Assert.assertEquals(nameToken, reader.read("a", NameToken.class));
+        Assert.assertEquals(numberToken, reader.read("1", NumberToken.class));
+        Assert.assertEquals(emptyToken, reader.read("", Token.class));
 
         Assert.assertEquals(
             333, Assert.assertThatCode(reader::read).throwsException(TokenizeException.class).getPosition()
