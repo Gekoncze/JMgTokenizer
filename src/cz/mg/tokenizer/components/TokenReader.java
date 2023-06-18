@@ -139,6 +139,12 @@ public @Component class TokenReader {
         return move();
     }
 
+    public void readEnd() {
+        if (item != null) {
+            throw exceptionFactory.create(item.get().getPosition(), "Unexpected token.");
+        }
+    }
+
     private @Mandatory Token move() {
         @SuppressWarnings("ConstantConditions")
         Token token = item.get();

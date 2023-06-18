@@ -25,6 +25,7 @@ public @Test class TokenReaderTest {
         TokenReader reader = new TokenReader(new List<>(), TokenizeException::new);
 
         Assert.assertNull(reader.getItem());
+        reader.readEnd();
 
         Assert.assertEquals(false, reader.has());
         Assert.assertEquals(false, reader.has(""));
@@ -83,6 +84,7 @@ public @Test class TokenReaderTest {
         Assert.assertNotNull(reader.getItem());
         Assert.assertEquals(reader.getItem(), list.getFirstItem());
         Assert.assertEquals(reader.getItem().get(), token);
+        Assert.assertThatCode(reader::readEnd).throwsException();
 
         Assert.assertEquals(true, reader.has());
         Assert.assertEquals(false, reader.has(""));
@@ -131,6 +133,7 @@ public @Test class TokenReaderTest {
         Assert.assertNull(reader.getItem());
         Assert.assertEquals(false, reader.hasPrevious()); // corner case
         Assert.assertEquals(false, reader.hasNext());
+        reader.readEnd();
         reader.reset();
 
         Assert.assertEquals(list.getFirstItem(), reader.getItem());
