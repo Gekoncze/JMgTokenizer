@@ -201,6 +201,12 @@ public @Component class TokenReader {
         }
     }
 
+    public void skip(@Mandatory Class<? extends Token> type) {
+        while (has(type)) {
+            read();
+        }
+    }
+
     public interface TokenPredicate {
         boolean match(@Mandatory Token token);
     }

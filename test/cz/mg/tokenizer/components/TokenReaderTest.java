@@ -7,6 +7,7 @@ import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.CommentToken;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Test class TokenReaderTest {
@@ -17,6 +18,7 @@ public @Test class TokenReaderTest {
         test.testEmpty();
         test.testSingle();
         test.testMultiple();
+        test.testSkip();
 
         System.out.println("OK");
     }
@@ -324,5 +326,14 @@ public @Test class TokenReaderTest {
         Assert.assertEquals(
             -123, Assert.assertThatCode(() -> reader.read("?")).throwsException(TokenizeException.class).getPosition()
         );
+    }
+
+    private void testSkip() {
+        NameToken nameToken = new NameToken("a", 2);
+        TokenReader reader = new TokenReader(new List<>(
+            new WhitespaceToken("\t", 0), new WhitespaceToken(" ", 1), nameToken
+        ), TokenizeException::new);
+        reader.skip(WhitespaceToken.class);
+        Assert.assertSame(nameToken, reader.read());
     }
 }
