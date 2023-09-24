@@ -3,18 +3,17 @@ package cz.mg.tokenizer.components;
 import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.collections.list.List;
-import cz.mg.collections.list.ListItem;
+import cz.mg.collections.list.ReadableList;
 import cz.mg.collections.list.ReadableListItem;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.exceptions.CodeException;
 
 public @Component class TokenReader {
-    private final @Mandatory List<Token> tokens;
+    private final @Mandatory ReadableList<Token> tokens;
     private final @Mandatory ExceptionFactory exceptionFactory;
-    private @Optional ListItem<Token> item;
+    private @Optional ReadableListItem<Token> item;
 
-    public TokenReader(@Mandatory List<Token> tokens, @Mandatory ExceptionFactory exceptionFactory) {
+    public TokenReader(@Mandatory ReadableList<Token> tokens, @Mandatory ExceptionFactory exceptionFactory) {
         this.tokens = tokens;
         this.exceptionFactory = exceptionFactory;
         this.item = tokens.getFirstItem();
