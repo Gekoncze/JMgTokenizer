@@ -117,9 +117,10 @@ public @Component class TokenReader {
         return move();
     }
 
-    public @Mandatory Token read(@Mandatory Class<? extends Token> type) {
+    @SuppressWarnings("unchecked")
+    public <T extends Token> @Mandatory T read(@Mandatory Class<T> type) {
         validate(type);
-        return move();
+        return (T) move();
     }
 
     public @Mandatory Token read(@Mandatory String text) {
@@ -132,10 +133,11 @@ public @Component class TokenReader {
         return move();
     }
 
-    public @Mandatory Token read(@Mandatory String text, @Mandatory Class<? extends Token> type) {
+    @SuppressWarnings("unchecked")
+    public <T extends Token> @Mandatory T read(@Mandatory String text, @Mandatory Class<T> type) {
         validate(text);
         validate(type);
-        return move();
+        return (T) move();
     }
 
     public void readEnd() {
