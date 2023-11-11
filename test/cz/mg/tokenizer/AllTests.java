@@ -12,7 +12,7 @@ public @Test class AllTests {
         BracketTokenParserTest.main(args);
         DoubleQuoteTokenParserTest.main(args);
         MultiLineCommentTokenParserTest.main(args);
-        NameTokenParserTest.main(args);
+        WordTokenParserTest.main(args);
         NumberTokenParserTest.main(args);
         OperatorTokenParserTest.main(args);
         SeparatorTokenParserTest.main(args);

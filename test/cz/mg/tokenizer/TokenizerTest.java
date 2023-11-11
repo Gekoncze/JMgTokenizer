@@ -22,9 +22,9 @@ public @Test class TokenizerTest {
     private void testTokenize() {
         testTokenize(
             "int a += 0; // test",
-            new NameToken("int", 0),
+            new WordToken("int", 0),
             new WhitespaceToken(" ", 3),
-            new NameToken("a", 4),
+            new WordToken("a", 4),
             new WhitespaceToken(" ", 5),
             new OperatorToken("+=", 6),
             new WhitespaceToken(" ", 8),
@@ -36,18 +36,18 @@ public @Test class TokenizerTest {
 
         testTokenize(
             "char* text=\"a 1 + '\";//comment of the day\naha/*a 1 + '*/hah",
-            new NameToken("char", 0),
+            new WordToken("char", 0),
             new OperatorToken("*", 4),
             new WhitespaceToken(" ", 5),
-            new NameToken("text", 6),
+            new WordToken("text", 6),
             new OperatorToken("=", 10),
             new DoubleQuoteToken("a 1 + '", 11),
             new SeparatorToken(";", 20),
             new SingleLineCommentToken("comment of the day", 21),
             new WhitespaceToken("\n", 41),
-            new NameToken("aha", 42),
+            new WordToken("aha", 42),
             new MultiLineCommentToken("a 1 + '", 45),
-            new NameToken("hah", 56)
+            new WordToken("hah", 56)
         );
 
         testTokenize(

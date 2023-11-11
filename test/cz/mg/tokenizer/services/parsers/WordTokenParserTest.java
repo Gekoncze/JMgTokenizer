@@ -1,13 +1,13 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
-public @Test class NameTokenParserTest {
+public @Test class WordTokenParserTest {
     public static void main(String[] args) {
-        System.out.print("Running " + NameTokenParserTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + WordTokenParserTest.class.getSimpleName() + " ... ");
 
-        NameTokenParserTest test = new NameTokenParserTest();
+        WordTokenParserTest test = new WordTokenParserTest();
         test.testParse();
 
         System.out.println("OK");
@@ -15,7 +15,7 @@ public @Test class NameTokenParserTest {
 
     private void testParse() {
         TokenParserTester tester = new TokenParserTester(
-            NameTokenParser.getInstance(), 0, 0, NameToken.class
+            WordTokenParser.getInstance(), 0, 0, WordToken.class
         );
         tester.testParse("");
         tester.testParse("1");

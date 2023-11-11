@@ -34,8 +34,8 @@ public @Service class TokenFactory {
         return new DoubleQuoteToken(text, 0);
     }
 
-    public @Mandatory NameToken name(@Mandatory String text) {
-        return new NameToken(text, 0);
+    public @Mandatory WordToken name(@Mandatory String text) {
+        return new WordToken(text, 0);
     }
 
     public @Mandatory NumberToken number(@Mandatory String text) {

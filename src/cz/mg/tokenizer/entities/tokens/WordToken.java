@@ -3,11 +3,11 @@ package cz.mg.tokenizer.entities.tokens;
 import cz.mg.annotations.classes.Entity;
 import cz.mg.tokenizer.entities.Token;
 
-public @Entity class NameToken extends Token {
-    public NameToken() {
+public @Entity class WordToken extends Token {
+    public WordToken() {
     }
 
-    public NameToken(String text, int position) {
+    public WordToken(String text, int position) {
         super(text, position);
     }
 }

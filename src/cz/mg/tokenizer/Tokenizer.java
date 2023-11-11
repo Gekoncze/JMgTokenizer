@@ -20,7 +20,7 @@ public @Component class Tokenizer {
             DoubleQuoteTokenParser.getInstance(),
             WhitespaceTokenParser.getInstance(),
             NumberTokenParser.getInstance(),
-            NameTokenParser.getInstance(),
+            WordTokenParser.getInstance(),
             BracketTokenParser.getInstance(),
             OperatorTokenParser.getInstance(),
             SeparatorTokenParser.getInstance(),
