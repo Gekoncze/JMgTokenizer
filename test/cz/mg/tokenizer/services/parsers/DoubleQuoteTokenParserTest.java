@@ -36,5 +36,6 @@ public @Test class DoubleQuoteTokenParserTest {
         tester.testParse("", "\"test //\"", "");
         tester.testParse("", "\"test /*\"", "");
         tester.testParse("", "\"test '\"", "'");
+        tester.testParse("", "\"\\\\\"", "");
     }
 }

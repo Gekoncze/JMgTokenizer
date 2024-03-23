@@ -39,7 +39,10 @@ public @Service class SingleQuoteTokenParser implements TokenParser {
     private @Mandatory Token parse(@Mandatory CharacterReader reader, @Mandatory TokenBuilder builder) {
         reader.read();
         while (reader.has()) {
-            if (reader.has(this::singleQuote) && !reader.hasPrevious(this::backslash)) {
+            if (reader.has(this::backslash) && reader.hasNext()) {
+                builder.getText().append(reader.read());
+                builder.getText().append(reader.read());
+            } else if (reader.has(this::singleQuote)) {
                 reader.read();
                 return builder.build(SingleQuoteToken::new);
             } else {

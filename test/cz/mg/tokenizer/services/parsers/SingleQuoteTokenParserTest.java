@@ -36,5 +36,6 @@ public @Test class SingleQuoteTokenParserTest {
         tester.testParse("", "'test //'", "");
         tester.testParse("", "'test /*'", "");
         tester.testParse("", "'test \"'", "'");
+        tester.testParse("", "'\\\\'", "");
     }
 }
