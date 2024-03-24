@@ -21,6 +21,11 @@ public @Component class CharacterReader {
         return position;
     }
 
+    public char get() {
+        validate();
+        return content.charAt(position);
+    }
+
     public boolean has() {
         return position >= 0 && position < content.length();
     }

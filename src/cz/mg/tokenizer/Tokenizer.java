@@ -52,6 +52,6 @@ public @Component class Tokenizer {
                 return token;
             }
         }
-        throw new TokenizeException(reader.getPosition(), "Unsupported character.");
+        throw new TokenizeException(reader.getPosition(), "Unexpected character '" + reader.get() + "'.");
     }
 }
