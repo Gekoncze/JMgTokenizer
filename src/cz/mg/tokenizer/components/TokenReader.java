@@ -6,7 +6,7 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.ReadableList;
 import cz.mg.collections.list.ReadableListItem;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 
 public @Component class TokenReader {
     private final @Mandatory ReadableList<Token> tokens;
@@ -213,6 +213,6 @@ public @Component class TokenReader {
     }
 
     public interface ExceptionFactory {
-        @Mandatory CodeException create(int position, @Mandatory String message);
+        @Mandatory TraceableException create(int position, @Mandatory String message);
     }
 }

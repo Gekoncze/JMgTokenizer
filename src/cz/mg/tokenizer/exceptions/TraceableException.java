@@ -2,15 +2,15 @@ package cz.mg.tokenizer.exceptions;
 
 import cz.mg.annotations.classes.Error;
 
-public @Error class CodeException extends RuntimeException {
+public @Error class TraceableException extends RuntimeException {
     private int position;
 
-    public CodeException(int position, String message) {
+    public TraceableException(int position, String message) {
         super(message);
         this.position = position;
     }
 
-    public CodeException(int position, String message, Throwable cause) {
+    public TraceableException(int position, String message, Throwable cause) {
         super(message, cause);
         this.position = position;
     }

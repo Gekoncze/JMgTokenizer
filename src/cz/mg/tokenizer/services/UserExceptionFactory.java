@@ -3,7 +3,7 @@ package cz.mg.tokenizer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.tokenizer.entities.Position;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.exceptions.UserException;
 
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ public class UserExceptionFactory {
     public @Mandatory UserException create(
         @Mandatory Path path,
         @Mandatory String content,
-        @Mandatory CodeException exception
+        @Mandatory TraceableException exception
     ) {
         return new UserException(
             exception.getPosition(),
@@ -43,7 +43,7 @@ public class UserExceptionFactory {
     private @Mandatory String getMessage(
         @Mandatory Path path,
         @Mandatory String content,
-        @Mandatory CodeException exception
+        @Mandatory TraceableException exception
     ) {
         Position position = positionService.find(content, exception.getPosition());
         return "In file '" + path +
