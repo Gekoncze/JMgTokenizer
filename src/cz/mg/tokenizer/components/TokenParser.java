@@ -1,11 +1,10 @@
-package cz.mg.tokenizer.services;
+package cz.mg.tokenizer.components;
 
-import cz.mg.annotations.classes.Service;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.components.CharacterReader;
 
-public @Service interface TokenParser {
+public @Component interface TokenParser {
     @Optional Token parse(@Mandatory CharacterReader reader);
 }
