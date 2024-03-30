@@ -9,11 +9,11 @@ import cz.mg.tokenizer.entities.tokens.*;
 
 import java.util.Objects;
 
-public @Test class TokenizerTest {
+public @Test class CTokenizerTest {
     public static void main(String[] args) {
-        System.out.print("Running " + TokenizerTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + CTokenizerTest.class.getSimpleName() + " ... ");
 
-        TokenizerTest test = new TokenizerTest();
+        CTokenizerTest test = new CTokenizerTest();
         test.testTokenize();
 
         System.out.println("OK");
@@ -71,7 +71,7 @@ public @Test class TokenizerTest {
     }
 
     private void testTokenize(@Mandatory String content, @Mandatory List<Token> expectedTokens) {
-        Tokenizer tokenizer = new Tokenizer();
+        CTokenizer tokenizer = new CTokenizer();
         List<Token> actualTokens = tokenizer.tokenize(content);
         Assert.assertThatCollections(expectedTokens, actualTokens)
             .withCompareFunction(this::compare)

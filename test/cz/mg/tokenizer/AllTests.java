@@ -29,6 +29,6 @@ public @Test class AllTests {
         TokenReaderTest.main(args);
 
         // cz.mg.tokenizer
-        TokenizerTest.main(args);
+        CTokenizerTest.main(args);
     }
 }
