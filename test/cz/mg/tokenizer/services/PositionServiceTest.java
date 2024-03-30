@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.test.Assert;
 import cz.mg.test.components.UnsafeRunnable;
-import cz.mg.tokenizer.entities.Position;
+import cz.mg.token.Position;
 
 public @Test class PositionServiceTest {
     public static void main(String[] args) {

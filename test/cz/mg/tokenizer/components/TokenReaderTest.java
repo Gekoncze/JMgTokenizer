@@ -3,11 +3,11 @@ package cz.mg.tokenizer.components;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.CommentToken;
-import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.CommentToken;
+import cz.mg.token.tokens.WordToken;
+import cz.mg.token.tokens.NumberToken;
+import cz.mg.token.tokens.WhitespaceToken;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Test class TokenReaderTest {

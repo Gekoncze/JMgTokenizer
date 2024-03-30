@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class TokenMutator {
     private static volatile @Service TokenMutator instance;

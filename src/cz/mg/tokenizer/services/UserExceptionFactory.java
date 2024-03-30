@@ -2,7 +2,7 @@ package cz.mg.tokenizer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.tokenizer.entities.Position;
+import cz.mg.token.Position;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.exceptions.UserException;
 

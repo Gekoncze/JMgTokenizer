@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.CharacterReader;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 import cz.mg.tokenizer.components.TokenParser;
 

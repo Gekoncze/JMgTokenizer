@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.ReadableList;
 import cz.mg.collections.list.ReadableListItem;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 
 public @Component class TokenReader {

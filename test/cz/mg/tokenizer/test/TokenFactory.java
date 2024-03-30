@@ -2,12 +2,12 @@ package cz.mg.tokenizer.test;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.*;
-import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
-import cz.mg.tokenizer.entities.tokens.comment.MultiLineCommentToken;
-import cz.mg.tokenizer.entities.tokens.comment.SingleLineCommentToken;
-import cz.mg.tokenizer.entities.tokens.quote.SingleQuoteToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.*;
+import cz.mg.token.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.tokens.comment.MultiLineCommentToken;
+import cz.mg.token.tokens.comment.SingleLineCommentToken;
+import cz.mg.token.tokens.quote.SingleQuoteToken;
 
 public @Service class TokenFactory {
     private static volatile @Service TokenFactory instance;
