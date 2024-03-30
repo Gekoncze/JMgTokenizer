@@ -1,7 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.SingleLineCommentToken;
+import cz.mg.tokenizer.entities.tokens.comment.SingleLineCommentToken;
 
 public @Test class SingleLineCommentTokenParserTest {
     public static void main(String[] args) {

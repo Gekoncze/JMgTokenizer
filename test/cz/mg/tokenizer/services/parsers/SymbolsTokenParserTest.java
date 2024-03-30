@@ -1,13 +1,13 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.OperatorToken;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 
-public @Test class OperatorTokenParserTest {
+public @Test class SymbolsTokenParserTest {
     public static void main(String[] args) {
-        System.out.print("Running " + OperatorTokenParserTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + SymbolsTokenParserTest.class.getSimpleName() + " ... ");
 
-        OperatorTokenParserTest test = new OperatorTokenParserTest();
+        SymbolsTokenParserTest test = new SymbolsTokenParserTest();
         test.testParse();
 
         System.out.println("OK");
@@ -15,7 +15,7 @@ public @Test class OperatorTokenParserTest {
 
     private void testParse() {
         TokenParserTester tester = new TokenParserTester(
-            OperatorTokenParser.getInstance(), 0, 0, OperatorToken.class
+            SymbolsTokenParser.getInstance(), 0, 0, SymbolToken.class
         );
         tester.testParse("");
         tester.testParse("1");

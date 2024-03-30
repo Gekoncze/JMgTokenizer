@@ -1,7 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.MultiLineCommentToken;
+import cz.mg.tokenizer.entities.tokens.comment.MultiLineCommentToken;
 
 public @Test class MultiLineCommentTokenParserTest {
     public static void main(String[] args) {

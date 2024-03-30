@@ -13,10 +13,8 @@ public @Component class CTokenizer extends SimpleTokenizer {
             WhitespaceTokenParser.getInstance(),
             NumberTokenParser.getInstance(),
             WordTokenParser.getInstance(),
-            BracketTokenParser.getInstance(),
-            OperatorTokenParser.getInstance(),
-            SeparatorTokenParser.getInstance(),
-            SpecialTokenParser.getInstance()
+            SymbolsTokenParser.getInstance(),
+            SymbolTokenParser.getInstance()
         );
     }
 }

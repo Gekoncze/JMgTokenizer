@@ -6,6 +6,9 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.*;
+import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.comment.MultiLineCommentToken;
+import cz.mg.tokenizer.entities.tokens.comment.SingleLineCommentToken;
 
 import java.util.Objects;
 
@@ -26,10 +29,10 @@ public @Test class CTokenizerTest {
             new WhitespaceToken(" ", 3),
             new WordToken("a", 4),
             new WhitespaceToken(" ", 5),
-            new OperatorToken("+=", 6),
+            new SymbolToken("+=", 6),
             new WhitespaceToken(" ", 8),
             new NumberToken("0", 9),
-            new SeparatorToken(";", 10),
+            new SymbolToken(";", 10),
             new WhitespaceToken(" ", 11),
             new SingleLineCommentToken(" test", 12)
         );
@@ -37,12 +40,12 @@ public @Test class CTokenizerTest {
         testTokenize(
             "char* text=\"a 1 + '\";//comment of the day\naha/*a 1 + '*/hah",
             new WordToken("char", 0),
-            new OperatorToken("*", 4),
+            new SymbolToken("*", 4),
             new WhitespaceToken(" ", 5),
             new WordToken("text", 6),
-            new OperatorToken("=", 10),
+            new SymbolToken("=", 10),
             new DoubleQuoteToken("a 1 + '", 11),
-            new SeparatorToken(";", 20),
+            new SymbolToken(";", 20),
             new SingleLineCommentToken("comment of the day", 21),
             new WhitespaceToken("\n", 41),
             new WordToken("aha", 42),
@@ -53,15 +56,15 @@ public @Test class CTokenizerTest {
         testTokenize(
             "1*(3.14/[0x32])-0.1",
             new NumberToken("1", 0),
-            new OperatorToken("*", 1),
-            new BracketToken("(", 2),
+            new SymbolToken("*", 1),
+            new SymbolToken("(", 2),
             new NumberToken("3.14", 3),
-            new OperatorToken("/", 7),
-            new BracketToken("[", 8),
+            new SymbolToken("/", 7),
+            new SymbolToken("[", 8),
             new NumberToken("0x32", 9),
-            new BracketToken("]", 13),
-            new BracketToken(")", 14),
-            new OperatorToken("-", 15),
+            new SymbolToken("]", 13),
+            new SymbolToken(")", 14),
+            new SymbolToken("-", 15),
             new NumberToken("0.1", 16)
         );
     }

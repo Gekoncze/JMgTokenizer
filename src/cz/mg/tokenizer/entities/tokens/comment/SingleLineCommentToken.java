@@ -1,6 +1,7 @@
-package cz.mg.tokenizer.entities.tokens;
+package cz.mg.tokenizer.entities.tokens.comment;
 
 import cz.mg.annotations.classes.Entity;
+import cz.mg.tokenizer.entities.tokens.CommentToken;
 
 public @Entity class SingleLineCommentToken extends CommentToken {
     public SingleLineCommentToken() {

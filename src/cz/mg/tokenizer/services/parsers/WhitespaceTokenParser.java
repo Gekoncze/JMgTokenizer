@@ -31,7 +31,7 @@ public @Service class WhitespaceTokenParser implements TokenParser {
         if (reader.has(this::space)) {
             return parse(reader, new TokenBuilder(reader.getPosition()));
         } else if (reader.has(this::tab) || reader.has(this::newline)) {
-            return TokenBuilder.next(reader).build(WhitespaceToken::new);
+            return TokenBuilder.build(reader, WhitespaceToken::new);
         } else {
             return null;
         }

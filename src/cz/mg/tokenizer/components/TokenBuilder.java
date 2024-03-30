@@ -38,10 +38,10 @@ public @Component class TokenBuilder {
         return factory.create(text.toString(), position);
     }
 
-    public static @Mandatory TokenBuilder next(@Mandatory CharacterReader reader) {
+    public static @Mandatory Token build(@Mandatory CharacterReader reader, @Mandatory TokenFactory factory) {
         return new TokenBuilder(
             reader.getPosition(),
             reader.read()
-        );
+        ).build(factory);
     }
 }

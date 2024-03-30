@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
 import cz.mg.tokenizer.services.TokenParser;
 import cz.mg.tokenizer.components.CharacterReader;
 import cz.mg.tokenizer.components.TokenBuilder;

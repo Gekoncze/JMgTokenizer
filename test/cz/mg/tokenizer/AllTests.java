@@ -9,16 +9,14 @@ import cz.mg.tokenizer.components.TokenReaderTest;
 public @Test class AllTests {
     public static void main(String[] args) {
         // cz.mg.tokenizer.services.parsers
-        BracketTokenParserTest.main(args);
         DoubleQuoteTokenParserTest.main(args);
         MultiLineCommentTokenParserTest.main(args);
         WordTokenParserTest.main(args);
         NumberTokenParserTest.main(args);
-        OperatorTokenParserTest.main(args);
-        SeparatorTokenParserTest.main(args);
+        SymbolsTokenParserTest.main(args);
         SingleLineCommentTokenParserTest.main(args);
         SingleQuoteTokenParserTest.main(args);
-        SpecialTokenParserTest.main(args);
+        SymbolTokenParserTest.main(args);
         WhitespaceTokenParserTest.main(args);
 
         // cz.mg.tokenizer.services

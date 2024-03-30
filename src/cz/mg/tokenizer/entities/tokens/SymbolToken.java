@@ -3,11 +3,11 @@ package cz.mg.tokenizer.entities.tokens;
 import cz.mg.annotations.classes.Entity;
 import cz.mg.tokenizer.entities.Token;
 
-public @Entity class SpecialToken extends Token {
-    public SpecialToken() {
+public @Entity class SymbolToken extends Token {
+    public SymbolToken() {
     }
 
-    public SpecialToken(String text, int position) {
+    public SymbolToken(String text, int position) {
         super(text, position);
     }
 }

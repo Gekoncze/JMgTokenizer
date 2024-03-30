@@ -1,7 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
 
 public @Test class DoubleQuoteTokenParserTest {
     public static void main(String[] args) {

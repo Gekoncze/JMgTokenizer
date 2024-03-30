@@ -1,7 +1,7 @@
 package cz.mg.tokenizer.services.parsers;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.tokenizer.entities.tokens.SingleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.quote.SingleQuoteToken;
 
 public @Test class SingleQuoteTokenParserTest {
     public static void main(String[] args) {
