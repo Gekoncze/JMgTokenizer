@@ -1,9 +1,8 @@
 package cz.mg.tokenizer.entities.tokens;
 
 import cz.mg.annotations.classes.Entity;
-import cz.mg.tokenizer.entities.Token;
 
-public @Entity class DoubleQuoteToken extends Token {
+public @Entity class DoubleQuoteToken extends QuoteToken {
     public DoubleQuoteToken() {
     }
 
