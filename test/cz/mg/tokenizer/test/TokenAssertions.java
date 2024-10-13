@@ -9,21 +9,21 @@ import cz.mg.token.Token;
 
 import java.util.Objects;
 
-public @Service class TokenValidator {
-    private static volatile @Service TokenValidator instance;
+public @Service class TokenAssertions {
+    private static volatile @Service TokenAssertions instance;
 
-    public static @Service TokenValidator getInstance() {
+    public static @Service TokenAssertions getInstance() {
         if (instance == null) {
             synchronized (Service.class) {
                 if (instance == null) {
-                    instance = new TokenValidator();
+                    instance = new TokenAssertions();
                 }
             }
         }
         return instance;
     }
 
-    private TokenValidator() {
+    private TokenAssertions() {
     }
 
     public void assertEquals(@Optional Token expectation, @Optional Token reality) {
