@@ -5,6 +5,7 @@ import cz.mg.tokenizer.components.CharacterReaderTest;
 import cz.mg.tokenizer.components.TokenBuilderTest;
 import cz.mg.tokenizer.components.TokenReaderTest;
 import cz.mg.tokenizer.services.PositionServiceTest;
+import cz.mg.tokenizer.services.UserExceptionFactoryTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -15,5 +16,6 @@ public @Test class AllTests {
 
         // cz.mg.tokenizer.services
         PositionServiceTest.main(args);
+        UserExceptionFactoryTest.main(args);
     }
 }
