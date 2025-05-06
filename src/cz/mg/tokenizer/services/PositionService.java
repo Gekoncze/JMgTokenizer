@@ -7,6 +7,9 @@ import cz.mg.token.Position;
 /**
  * Helper class to find row and column for given text content and linear position.
  * Works only with content that use '\n' separator.
+ * Rows and columns start with 1.
+ * Out of bounds position throws an exception.
+ * Last valid position is content length.
  */
 public @Service class PositionService {
     private static volatile @Service PositionService instance;
@@ -46,7 +49,7 @@ public @Service class PositionService {
     }
 
     private void validate(@Mandatory String content, int position) {
-        if (position < 0 || position >= content.length()) {
+        if (position < 0 || position > content.length()) {
             throw new ArrayIndexOutOfBoundsException(
                 "Position " + position + " is out of bounds of string of length " + content.length() + "."
             );

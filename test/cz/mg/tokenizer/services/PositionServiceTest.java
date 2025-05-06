@@ -12,22 +12,33 @@ public @Test class PositionServiceTest {
         System.out.print("Running " + PositionServiceTest.class.getSimpleName() + " ... ");
 
         PositionServiceTest test = new PositionServiceTest();
-        test.testFindInEmpty();
+        test.testFindInEmptyLine();
+        test.testFindInSingleCharacterLine();
         test.testFindInSingleLine();
-        test.testFindInMultipleLines1();
-        test.testFindInMultipleLines2();
-        test.testFindInMultipleLines3();
+        test.testFindInMultipleLines();
+        test.testFindInMultipleEmptyLines();
+        test.testFindInMultipleLinesWithWeirdSpaces();
 
         System.out.println("OK");
     }
 
     private final @Service PositionService service = PositionService.getInstance();
 
-    private void testFindInEmpty() {
+    private void testFindInEmptyLine() {
+        assertThrows(() -> service.find("", -11));
         assertThrows(() -> service.find("", -1));
-        assertThrows(() -> service.find("", 0));
+        assertEquals(new Position(1, 1), service.find("", 0));
         assertThrows(() -> service.find("", 1));
         assertThrows(() -> service.find("", 11));
+    }
+
+    private void testFindInSingleCharacterLine() {
+        assertThrows(() -> service.find("a", -11));
+        assertThrows(() -> service.find("a", -1));
+        assertEquals(new Position(1, 1), service.find("a", 0));
+        assertEquals(new Position(1, 2), service.find("a", 1));
+        assertThrows(() -> service.find("a", 2));
+        assertThrows(() -> service.find("a", 11));
     }
 
     private void testFindInSingleLine() {
@@ -43,7 +54,7 @@ public @Test class PositionServiceTest {
         assertThrows(() -> service.find("", 1000));
     }
 
-    private void testFindInMultipleLines1() {
+    private void testFindInMultipleLines() {
         String content = "Multi line test\nof position service\n.";
         assertThrows(() -> service.find(content, -1));
         assertEquals(new Position(1, 1), service.find(content, 0));
@@ -56,17 +67,23 @@ public @Test class PositionServiceTest {
         assertEquals(new Position(2, 19), service.find(content, 34));
         assertEquals(new Position(2, 20), service.find(content, 35));
         assertEquals(new Position(3, 1), service.find(content, 36));
-        assertThrows(() -> service.find(content, 37));
+        assertEquals(new Position(3, 2), service.find(content, 37));
+        assertThrows(() -> service.find(content, 38));
     }
 
-    private void testFindInMultipleLines2() {
+    private void testFindInMultipleEmptyLines() {
         assertEquals(new Position(1, 1), service.find("\n", 0));
+        assertEquals(new Position(2, 1), service.find("\n", 1));
+        assertEquals(new Position(1, 1), service.find("\n\n", 0));
         assertEquals(new Position(2, 1), service.find("\n\n", 1));
+        assertEquals(new Position(3, 1), service.find("\n\n", 2));
+        assertEquals(new Position(1, 1), service.find("\n\n\n", 0));
         assertEquals(new Position(2, 1), service.find("\n\n\n", 1));
         assertEquals(new Position(3, 1), service.find("\n\n\n", 2));
+        assertEquals(new Position(4, 1), service.find("\n\n\n", 3));
     }
 
-    private void testFindInMultipleLines3() {
+    private void testFindInMultipleLinesWithWeirdSpaces() {
         String content = "\n multi line \n";
         assertThrows(() -> service.find(content, -1));
         assertEquals(new Position(1, 1), service.find(content, 0));
@@ -74,7 +91,8 @@ public @Test class PositionServiceTest {
         assertEquals(new Position(2, 2), service.find(content, 2));
         assertEquals(new Position(2, 12), service.find(content, 12));
         assertEquals(new Position(2, 13), service.find(content, 13));
-        assertThrows(() -> service.find(content, 14));
+        assertEquals(new Position(3, 1), service.find(content, 14));
+        assertThrows(() -> service.find(content, 15));
     }
 
     private void assertEquals(@Mandatory Position a, @Mandatory Position b) {
