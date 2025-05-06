@@ -4,6 +4,10 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.token.Position;
 
+/**
+ * Helper class to find row and column for given text content and linear position.
+ * Works only with content that use '\n' separator.
+ */
 public @Service class PositionService {
     private static volatile @Service PositionService instance;
 
