@@ -1,5 +1,6 @@
 package cz.mg.tokenizer.services;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.test.Assert;
@@ -20,8 +21,9 @@ public @Test class PositionServiceTest {
         System.out.println("OK");
     }
 
+    private final @Service PositionService service = PositionService.getInstance();
+
     private void testFindInEmpty() {
-        PositionService service = PositionService.getInstance();
         assertThrows(() -> service.find("", -1));
         assertThrows(() -> service.find("", 0));
         assertThrows(() -> service.find("", 1));
@@ -30,7 +32,6 @@ public @Test class PositionServiceTest {
 
     private void testFindInSingleLine() {
         String content = "Single line test.";
-        PositionService service = PositionService.getInstance();
         assertThrows(() -> service.find("", -1000));
         assertThrows(() -> service.find("", -1));
         assertEquals(new Position(1, 1), service.find(content, 0));
@@ -44,7 +45,6 @@ public @Test class PositionServiceTest {
 
     private void testFindInMultipleLines1() {
         String content = "Multi line test\nof position service\n.";
-        PositionService service = PositionService.getInstance();
         assertThrows(() -> service.find(content, -1));
         assertEquals(new Position(1, 1), service.find(content, 0));
         assertEquals(new Position(1, 2), service.find(content, 1));
@@ -60,7 +60,6 @@ public @Test class PositionServiceTest {
     }
 
     private void testFindInMultipleLines2() {
-        PositionService service = PositionService.getInstance();
         assertEquals(new Position(1, 1), service.find("\n", 0));
         assertEquals(new Position(2, 1), service.find("\n\n", 1));
         assertEquals(new Position(2, 1), service.find("\n\n\n", 1));
@@ -69,7 +68,6 @@ public @Test class PositionServiceTest {
 
     private void testFindInMultipleLines3() {
         String content = "\n multi line \n";
-        PositionService service = PositionService.getInstance();
         assertThrows(() -> service.find(content, -1));
         assertEquals(new Position(1, 1), service.find(content, 0));
         assertEquals(new Position(2, 1), service.find(content, 1));
