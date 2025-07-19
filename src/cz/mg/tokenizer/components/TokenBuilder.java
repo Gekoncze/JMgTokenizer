@@ -45,11 +45,14 @@ public @Component class TokenBuilder {
         return this;
     }
 
-    public @Mandatory Token build(@Mandatory TokenFactory factory) {
+    public @Mandatory <T extends Token> T build(@Mandatory TokenFactory<T> factory) {
         return factory.create(getText(), getPosition());
     }
 
-    public static @Mandatory Token build(@Mandatory CharacterReader reader, @Mandatory TokenFactory factory) {
+    public static @Mandatory <T extends Token> T build(
+        @Mandatory CharacterReader reader,
+        @Mandatory TokenFactory<T> factory
+    ) {
         return new TokenBuilder(
             reader.getPosition(),
             reader.read()
