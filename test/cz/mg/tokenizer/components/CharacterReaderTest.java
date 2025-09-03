@@ -2,6 +2,7 @@ package cz.mg.tokenizer.components;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Test class CharacterReaderTest {
@@ -55,11 +56,11 @@ public @Test class CharacterReaderTest {
 
         Assert.assertEquals(0, reader.getPosition());
 
-        Assert.assertThatCode(reader::read).throwsException(TokenizeException.class);
-        Assert.assertThatCode(() -> reader.read('a')).throwsException(TokenizeException.class);
-        Assert.assertThatCode(() -> reader.read(' ')).throwsException(TokenizeException.class);
-        Assert.assertThatCode(() -> reader.read(ch -> true)).throwsException(TokenizeException.class);
-        Assert.assertThatCode(() -> reader.read(ch -> false)).throwsException(TokenizeException.class);
+        Assert.assertException(reader::read, TokenizeException.class);
+        Assert.assertException(() -> reader.read('a'), TokenizeException.class);
+        Assert.assertException(() -> reader.read(' '), TokenizeException.class);
+        Assert.assertException(() -> reader.read(ch -> true), TokenizeException.class);
+        Assert.assertException(() -> reader.read(ch -> false), TokenizeException.class);
 
         Assert.assertEquals(0, reader.getPosition());
     }
@@ -107,7 +108,7 @@ public @Test class CharacterReaderTest {
 
         Assert.assertEquals('a', reader.read());
         Assert.assertEquals(1, reader.getPosition());
-        Assert.assertThatCode(reader::read).throwsException(TokenizeException.class);
+        Assert.assertException(reader::read, TokenizeException.class);
         Assert.assertEquals(1, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('a'));
         Assert.assertEquals(true, reader.hasPrevious(ch -> ch == 'a'));
@@ -128,8 +129,8 @@ public @Test class CharacterReaderTest {
 
         Assert.assertEquals(0, reader.getPosition());
 
-        Assert.assertThatCode(() -> reader.read(' ')).throwsException(TokenizeException.class);
-        Assert.assertThatCode(() -> reader.read(ch -> false)).throwsException(TokenizeException.class);
+        Assert.assertException(() -> reader.read(' '), TokenizeException.class);
+        Assert.assertException(() -> reader.read(ch -> false), TokenizeException.class);
 
         Assert.assertEquals(0, reader.getPosition());
     }
@@ -145,7 +146,7 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(true, reader.hasNext('\n'));
         Assert.assertEquals(true, reader.hasNext(ch -> ch == '\n'));
 
-        Assert.assertThatCode(() -> reader.read('\n')).throwsException(TokenizeException.class);
+        Assert.assertException(() -> reader.read('\n'), TokenizeException.class);
         Assert.assertEquals('a', reader.read());
         Assert.assertEquals(1, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('a'));
@@ -155,7 +156,7 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(true, reader.hasNext(' '));
         Assert.assertEquals(true, reader.hasNext(ch -> ch == ' '));
 
-        Assert.assertThatCode(() -> reader.read('a')).throwsException(TokenizeException.class);
+        Assert.assertException(() -> reader.read('a'), TokenizeException.class);
         Assert.assertEquals('\n', reader.read());
         Assert.assertEquals(2, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious('\n'));
@@ -165,7 +166,7 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(false, reader.hasNext());
         Assert.assertEquals(false, reader.hasNext(ch -> true));
 
-        Assert.assertThatCode(() -> reader.read('1')).throwsException(TokenizeException.class);
+        Assert.assertException(() -> reader.read('1'), TokenizeException.class);
         Assert.assertEquals(' ', reader.read());
         Assert.assertEquals(3, reader.getPosition());
         Assert.assertEquals(true, reader.hasPrevious(' '));
@@ -175,7 +176,7 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(false, reader.hasNext());
         Assert.assertEquals(false, reader.hasNext(ch -> true));
 
-        Assert.assertThatCode(reader::read).throwsException(TokenizeException.class);
+        Assert.assertException(reader::read, TokenizeException.class);
         Assert.assertEquals(3, reader.getPosition());
 
         reader.reset();
@@ -191,13 +192,19 @@ public @Test class CharacterReaderTest {
         Assert.assertEquals(' ', reader.read(ch -> true));
 
         Assert.assertEquals(
-            2, Assert.assertThatCode(reader::read).throwsException(TokenizeException.class).getPosition()
+            2,
+            Assertions.assertThatCode(reader::read)
+                .throwsException(TokenizeException.class)
+                .getPosition()
         );
 
         reader.reset();
 
         Assert.assertEquals(
-            0, Assert.assertThatCode(() -> reader.read('?')).throwsException(TokenizeException.class).getPosition()
+            0,
+            Assertions.assertThatCode(() -> reader.read('?'))
+                .throwsException(TokenizeException.class)
+                .getPosition()
         );
     }
 }
