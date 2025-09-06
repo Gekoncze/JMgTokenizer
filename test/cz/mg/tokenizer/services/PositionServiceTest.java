@@ -4,8 +4,8 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.test.Assert;
-import cz.mg.test.BiAssertions;
-import cz.mg.test.components.functions.UnsafeRunnable;
+import cz.mg.test.Assertions;
+import cz.mg.test.functions.UnsafeRunnable;
 import cz.mg.token.Position;
 
 public @Test class PositionServiceTest {
@@ -96,23 +96,22 @@ public @Test class PositionServiceTest {
         assertException(() -> service.find(content, 15));
     }
 
-    private void assertEquals(@Mandatory Position a, @Mandatory Position b) {
-        BiAssertions
-            .assertThat(a, b)
-            .withCompareFunction(this::compare)
-            .withPrintFunction(this::toString)
-            .areEqual();
+    private void assertEquals(@Mandatory Position expectation, @Mandatory Position reality) {
+        Assertions.assertThat(reality)
+            .withEqualsFunction(this::equals)
+            .withFormatFunction(this::format)
+            .isEqualTo(expectation);
     }
 
     private void assertException(@Mandatory UnsafeRunnable runnable) {
         Assert.assertException(runnable, ArrayIndexOutOfBoundsException.class);
     }
 
-    private boolean compare(@Mandatory Position a, @Mandatory Position b) {
+    private boolean equals(@Mandatory Position a, @Mandatory Position b) {
         return a.getRow() == b.getRow() && a.getColumn() == b.getColumn();
     }
 
-    private @Mandatory String toString(@Mandatory Position p) {
+    private @Mandatory String format(@Mandatory Position p) {
         return "(" + p.getRow() + "," + p.getColumn() + ")";
     }
 }
